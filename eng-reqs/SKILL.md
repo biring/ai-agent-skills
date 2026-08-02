@@ -14,8 +14,8 @@ Default output is a single tab-separated values (.tsv) file — see "TSV formatt
 Narrative sections are written as labeled sections (TSV: one section-label row per section, content in the row(s) below it; docx: a heading per section). The Requirements section is always a proper table (TSV table or Word table, per Output format above). At minimum, sections appear in this order:
 
 1. **Metadata** — Document Title (format: `req-<type/name>-v<number>-<yymmdd>-<checksum>`), Version, Date/Time (format: `YYMMDD HHMMSS UTC`), Author, Status. Ask the user if they want additional metadata fields (e.g. Approver, Project/Program, Related Documents) before finalizing.
-2. **Purpose** — why this document/requirement set exists.
-3. **Scope** — what is and is not covered. Also states plainly that any requirement marked [OBSOLETE] is retained for traceability only and must not be treated as an active requirement or implemented against.
+2. **Purpose** — why this document/requirement set exists. Stays solution-free, consistent with this skill's Need/Requirement/Design Specification distinction (see Definitions): describe the underlying need driving the document, not the specific implementation (e.g., avoid naming the technology stack, specific UI mechanisms, or other design-specification-level detail).
+3. **Scope** — what is and is not covered. Also states plainly that any requirement marked [OBSOLETE] is retained for traceability only and must not be treated as an active requirement or implemented against. Like Purpose, stays solution-free — describe what's covered in terms of the underlying need, not implementation detail.
 4. **Definitions** — glossary of terms/acronyms used in the document. Must include an entry for the `[OBSOLETE]` flag itself: it means the requirement is retired and retained for traceability only, and that a retired ID is never reused, even if the requirement is later reinstated. Should also draw the three-way distinction so writers and reviewers apply it consistently: **Need** (what a stakeholder wants, solution-independent, informal — not itself a requirement), **Requirement** (a quantified, verifiable, solution-domain statement — design *input*, what this doc captures), **Design Specification** (states *how* the need/requirement is met — design *output*, explicitly out of scope for this document).
 5. **Tags** — defines the category values used in the Requirements table's Tags column (default set: Functional, Performance, User Interface, Environmental — extend or adjust per the user's domain, e.g. add Safety, Manufacturability, Reliability for hardware-heavy docs).
 6. **Requirements** — a table with columns, in this order: ID, Name, Requirement, Rationale, Verification Method, Importance, Tags, Notes/Comments. See "Writing each column" below for how to fill each one. Confirm with the user if they want different or additional columns (e.g. Priority, Owner, Traceability ID).
@@ -62,7 +62,7 @@ When auditing a requirement (see "Audit criteria for this document type" below),
 
 **Obsolete requirements are never deleted from the table.** A requirement is retired by prefixing its Requirement text with `[OBSOLETE]` and adding the version it was made obsolete and the reason to Notes/Comments. That ID is retired permanently — if the same need comes back later, give it a new ID and reference the old one, rather than reusing or un-flagging the retired one.
 
-Checksum in the Document Title is always an 8-bit CRC (CRC-8) of the file's content, written as 2 hex digits, recomputed each time the file is written — this applies whether the file is TSV or docx.
+Checksum in the Document Title is always a 32-bit CRC (CRC-32) of the file's content, written as 8 hex digits, recomputed each time the file is written — this applies whether the file is TSV or docx.
 
 ## Audit criteria for this document type
 
