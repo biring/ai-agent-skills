@@ -1,2 +1,2 @@
 # ai-agent-skills
-Structured AI agent instructions for document creation and review workflows — provider-agnostic, organized one skill per folder.
+Custom Skills for AI agents — provider-agnostic, organized one skill per folder (each folder = a SKILL.md plus optional bundled resources). This git repo is the working source of truth.
