@@ -1,6 +1,6 @@
 ---
 name: doc-workflow
-description: Generic Build → Iterate → Audit → Resolve → Critical Check → Write → Skill Improvement review workflow for creating or updating any structured document (requirements docs, test plans, design specs, GPT/agent instructions, etc.) issue-by-issue rather than in bulk. Use this skill whenever the user asks to create, write, draft, or update a structured document of this kind — the request doesn't need to mention "review" or "workflow" explicitly; document creation itself implies wanting this issue-by-issue process rather than a single unreviewed dump. This skill defines the review PROCESS only — sections, formatting rules, output format/location, and specific audit criteria come from whatever the document is (another skill's own content, or the user's stated preferences).
+description: Generic Gather → Iterate → Audit → Resolve → Critical Check → Write → Skill Improvement workflow for creating or updating any structured document (requirements docs, test plans, design specs, agent instructions, etc.) issue-by-issue rather than in bulk. Use whenever the user asks to create, write, draft, or update this kind of document, even without saying "review" or "workflow" explicitly. Defines the review PROCESS only — sections, formatting, and audit criteria come from the document type itself or the user's stated preferences.
 ---
 
 # Document Workflow
@@ -9,9 +9,13 @@ A structured, issue-by-issue process for drafting or updating any document. This
 
 Draft work happens in the conversation only — the output file is not created or overwritten until Write (6) confirms it.
 
-When presenting multiple items for review (the section/content list in Iterate (2), or Audit (3) findings in Resolve (4)), always give a summary first tagging each item New, Update, or Remove, then review items one at a time — never in bulk — showing Before, After, and Reason, and wait for the user to Approve, Reject, or Update before moving to the next.
+Stage transitions require explicit confirmation. When a stage's work is complete, name the next stage and ask the user to confirm before starting it (e.g. "Ready to move to Audit (3)?") — never advance automatically. When a new stage begins, label it at the start of that output as "WORKFLOW STAGE: <Name>" (e.g. "WORKFLOW STAGE: Audit (3)").
 
-## Build (1)
+The user can move back to any earlier stage at any time to do more work (e.g., return to Iterate (2) after Audit (3) has started) — there is no restriction on revisiting a prior stage. Resume forward from wherever the user left off.
+
+When presenting multiple items for review (the section/content list in Iterate (2), or Audit (3) findings in Resolve (4)), always give a summary first tagging each item New, Update, or Remove, then review items one at a time — never in bulk. Present each item as a single text block showing Before, After, and Reason; the Reason should include enough context (what prompted the change and why it matters) to stand on its own, not just a one-line justification. Wait for the user to Approve, Reject, or Update before moving to the next.
+
+## Gather (1)
 
 Establish what needs to be created or changed — ask if not already stated. For a new document: fill in sections one at a time, against the document type's defined section list as-is — don't pause to evaluate whether that section list itself needs changing. For an update to an existing document: gather the specific list of changes or feedback to address.
 
@@ -19,11 +23,13 @@ Don't fabricate specific values (numbers, thresholds, names, dates) the user has
 
 Whenever it's unclear which section content belongs in, ask rather than deciding unilaterally.
 
-Output of this step: the list of sections/content items to work through in Iterate (2).
+Output of this step: a short numbered summary list (1–2 sentences per item) of the sections/content items to work through in Iterate (2). Show the list and confirm with the user before moving to Iterate (2).
 
 ## Iterate (2)
 
 Work with the user until they confirm the document is good (e.g. "this looks good"). No changes to the section list itself during this phase.
+
+If new items are found during this phase, add them to the list rather than resolving them immediately — work through the list in order (FIFO) so nothing is missed or handled out of sequence.
 
 ## Audit (3)
 
@@ -37,15 +43,15 @@ Present the complete list before making any changes.
 
 ## Resolve (4)
 
-Show a summary of all findings first (tagged New/Update/Remove), then review each finding one at a time: Before, After, Reason. The user selects Approve, Reject, or Update for each. Apply only approved (or user-updated) changes. Before declaring a batch complete, cross-check the count and identifiers of items actually resolved against the original source list (e.g., the input change list or Build-phase item list) — do not rely on sequential item-by-item narration alone to confirm full coverage, since an item can be silently skipped mid-sequence without the omission being obvious from the running commentary.
+Review the Audit (3) findings per the review format defined above. Apply only approved (or user-updated) changes. Before declaring a batch complete, cross-check the count and identifiers of items actually resolved against the original source list (e.g., the input change list or Gather-phase item list) — do not rely on sequential item-by-item narration alone to confirm full coverage, since an item can be silently skipped mid-sequence without the omission being obvious from the running commentary.
 
 ## Critical Check (5)
 
-Re-run Audit (3) for critical or serious issues only. If any are found, go to Resolve (4). If none, proceed to Write (6).
+Re-run Audit (3) for critical or serious issues only. If any are found, go to Resolve (4). If none, confirm with the user before moving to Write (6).
 
 ## Write (6)
 
-Show a summary diff of what will change in the file (or the full draft, for a new document). Only after the user confirms, write the file to the document type's defined output location and present it.
+Show a summary diff of what will change in the file (or the full draft, for a new document). This requires its own confirmation, separate from the stage-transition confirmation already given to enter this stage — only after the user confirms the write itself, write the file to the document type's defined output location and present it.
 
 If the document type defines version/revision-tracking fields (e.g. a Version number, a Revision History section), update them as part of this step, per that document type's own rules.
 
