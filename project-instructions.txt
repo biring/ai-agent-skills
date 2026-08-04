@@ -56,33 +56,24 @@ Do not confuse this with using the AI platform's own general-purpose built-in ca
 
 WORKFLOW
 
-Build (1) through Critical Check (5) operate on drafts only - no file under {workspace}\skills\<skill-name>, {workspace}\templates, or project-instructions.txt is created or modified until Write (6) confirms it in writing.
+Skill development follows the doc-workflow skill's process: Gather (1) → Iterate (2) → Audit (3) → Resolve (4) → Critical Check (5) → Write (6).
 
-When presenting multiple items for review (Build (1)'s list in Iterate (2), or Audit (3) findings in Resolve (4)), always give a summary first tagging each item New, Update, or Remove, then review items one at a time - never in bulk - showing Before, After, and Reason, and wait for the user to Approve, Change, or Reject before moving to the next.
+Check that the doc-workflow skill is loaded and available. If it is not, ask the user to load it before proceeding.
 
-Step - Build (1):
-Start by establishing what needs to be created or changed - ask the user for it if not already stated. For a new skill, this means filling in the SKILL.md template section by section, against the template as-is - do not pause to evaluate template gaps. For a revision to an existing skill, this means gathering the specific list of changes or feedback to address. Add bundled resources (scripts/references/assets) only for content that would push SKILL.md over a reasonable length, needs worked examples, or is executable logic better run than described. Stay focused on getting this skill right. The output of this step is the list of sections or changes to work through in Iterate (2).
+The "document" being built here is a SKILL.md (and its bundled resources), defined by `templates/SKILL-template.md`.
 
-Step - Iterate (2):
-Iterate with the user until they confirm the skill is good (e.g. "this looks good"). No template changes during this phase.
+No file under `{workspace}\skills\<skill-name>`, `{workspace}\templates`, or `project-instructions.txt` is created or modified until Write (6) confirms it in writing.
 
-Step - Audit (3):
-Run a full check against all template (SKILL.md and bundled resource) constraints. Produce a numbered list where each item contains the issue and a suggested fix. Check for:
-- Ambiguity: any instruction that could be interpreted more than one way
-- Duplication: where the same content appears in more than one place. For each case, identify which location should be the single source of truth based on the context and scope of that file and section, and suggest removing or deferring to it from all other locations
-- Errors: anything incorrect, inconsistent, or broken
-- Independence violations: any reference to another skill in this workspace by name, path, or file link (see SKILL DESIGN CONSTRAINT)
-- Description quality: does the `description:` frontmatter clearly state both what the skill does and when to trigger it, including phrasing variations a user might actually type
-Present the complete list to the user before making any changes. For a revision to an already-shipped skill (Write (6) previously completed), scope the audit to the changed content and its interactions with the rest of the file(s), rather than re-auditing unchanged, previously-approved baseline content.
+Skill-specific detail for each stage:
 
-Step - Resolve (4):
-Review each numbered item with the user. Apply only approved changes.
+- **Gather (1)**: For a new skill, fill in the SKILL.md template section by section, against the template as-is — don't pause to evaluate template gaps. For a revision to an existing skill, gather the specific list of changes or feedback to address. Add bundled resources (scripts/references/assets) only for content that would push SKILL.md over a reasonable length, needs worked examples, or is executable logic better run than described.
+- **Audit (3)**: In addition to doc-workflow's process-level checks, check for:
+  - Ambiguity: any instruction that could be interpreted more than one way
+  - Independence violations: any reference to another skill in this workspace by name, path, or file link (see SKILL DESIGN CONSTRAINT)
+  - Description quality: does the `description:` frontmatter clearly state both what the skill does and when to trigger it, including phrasing variations a user might actually type
+- **Write (6)**: Write to `{workspace}\skills\<skill-name>`. Overwrite any existing files — all files are under git control.
 
-Step - Critical Check (5):
-Re-run Audit (3) for critical or serious issues only. If any are found, go to Resolve (4). If none, proceed to Write (6), which begins by requesting approval to write.
-
-Step - Write (6):
-Ask the user for explicit approval before writing. List the exact file paths that will be created or overwritten, and wait for confirmation. Only after the user confirms, write to {workspace}\skills\<skill-name>. Overwrite any existing files - all files are under git control.
+Two additional steps run after Write (6), specific to this project (not part of doc-workflow's own process):
 
 Step - Lessons Learned (7):
 Runs only after Write (6) - once the user has approved the skill and the local files are written. Never during development.
