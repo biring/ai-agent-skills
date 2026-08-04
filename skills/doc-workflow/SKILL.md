@@ -37,7 +37,7 @@ Present the complete list before making any changes.
 
 ## Resolve (4)
 
-Show a summary of all findings first (tagged New/Update/Remove), then review each finding one at a time: Before, After, Reason. The user selects Approve, Reject, or Update for each. Apply only approved (or user-updated) changes.
+Show a summary of all findings first (tagged New/Update/Remove), then review each finding one at a time: Before, After, Reason. The user selects Approve, Reject, or Update for each. Apply only approved (or user-updated) changes. Before declaring a batch complete, cross-check the count and identifiers of items actually resolved against the original source list (e.g., the input change list or Build-phase item list) — do not rely on sequential item-by-item narration alone to confirm full coverage, since an item can be silently skipped mid-sequence without the omission being obvious from the running commentary.
 
 ## Critical Check (5)
 
