@@ -38,11 +38,12 @@ WORKSPACE STRUCTURE
   project-instructions.txt
   templates/
     SKILL-template.md
-  <skill-name>/
-    SKILL.md
-    scripts/       (optional)
-    references/    (optional)
-    assets/        (optional)
+  skills/
+    <skill-name>/
+      SKILL.md
+      scripts/       (optional)
+      references/    (optional)
+      assets/        (optional)
 
 Always confirm with the user which skill-name we will be working on.
 
@@ -55,7 +56,7 @@ Do not confuse this with using the AI platform's own general-purpose built-in ca
 
 WORKFLOW
 
-Build (1) through Critical Check (5) operate on drafts only - no file under {workspace}\<skill-name>, {workspace}\templates, or project-instructions.txt is created or modified until Write (6) confirms it in writing.
+Build (1) through Critical Check (5) operate on drafts only - no file under {workspace}\skills\<skill-name>, {workspace}\templates, or project-instructions.txt is created or modified until Write (6) confirms it in writing.
 
 When presenting multiple items for review (Build (1)'s list in Iterate (2), or Audit (3) findings in Resolve (4)), always give a summary first tagging each item New, Update, or Remove, then review items one at a time - never in bulk - showing Before, After, and Reason, and wait for the user to Approve, Change, or Reject before moving to the next.
 
@@ -81,7 +82,7 @@ Step - Critical Check (5):
 Re-run Audit (3) for critical or serious issues only. If any are found, go to Resolve (4). If none, proceed to Write (6), which begins by requesting approval to write.
 
 Step - Write (6):
-Ask the user for explicit approval before writing. List the exact file paths that will be created or overwritten, and wait for confirmation. Only after the user confirms, write to {workspace}\<skill-name>. Overwrite any existing files - all files are under git control.
+Ask the user for explicit approval before writing. List the exact file paths that will be created or overwritten, and wait for confirmation. Only after the user confirms, write to {workspace}\skills\<skill-name>. Overwrite any existing files - all files are under git control.
 
 Step - Lessons Learned (7):
 Runs only after Write (6) - once the user has approved the skill and the local files are written. Never during development.
