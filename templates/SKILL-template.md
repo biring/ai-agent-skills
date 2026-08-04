@@ -34,9 +34,17 @@ description: <what this skill does, AND when to trigger it — include phrasing 
 
 <Section-by-section (or field-by-field) breakdown of the deliverable's structure. Mark which sections are always required vs. optional/ask-the-user.>
 
+## Example <OPTIONAL — include when the output has structural rules (grouping, merging, tagging, conditional formats, etc.) that are easier to convey with a worked example than prose alone.>
+
+<One or more small worked examples showing the output structure in a representative scenario.>
+
 ## Formatting rules <OPTIONAL — include only if the output format has structural rules that would otherwise be ambiguous or inconsistently applied, e.g. delimiter/encoding rules for a TSV, table conventions for a docx, heading levels for markdown.>
 
 <Concrete, mechanical rules — delimiters, encoding, column order, header requirements, etc.>
+
+## Write-time rules <OPTIONAL — include only if this skill has side effects that happen specifically at write time beyond just saving the file: updating a version/metadata field, replacing vs. appending content, recomputing a checksum, etc.>
+
+<What changes automatically each time the file is written.>
 
 ## Quality / audit criteria <CORE>
 
