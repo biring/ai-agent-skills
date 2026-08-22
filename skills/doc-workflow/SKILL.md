@@ -13,7 +13,9 @@ Stage transitions require explicit confirmation. When a stage's work is complete
 
 The user can move back to any earlier stage at any time to do more work (e.g., return to Iterate (2) after Audit (3) has started) — there is no restriction on revisiting a prior stage. Resume forward from wherever the user left off.
 
-When presenting multiple items for review (the section/content list in Iterate (2), or Audit (3) findings in Resolve (4)), always give a summary first tagging each item New, Update, or Remove, then review items one at a time — never in bulk. Present each item as a single text block showing Before, After, and Reason; the Reason should include enough context (what prompted the change and why it matters) to stand on its own, not just a one-line justification. Wait for the user to Approve, Reject, or Update before moving to the next.
+When presenting multiple items for review (the section/content list in Iterate (2), or Audit (3) findings in Resolve (4)), always give a summary first tagging each item New, Update, or Remove, then review items one at a time — never in bulk. Present each item with the following fields, each label on its own line, in all caps, with no colon after the label: CONTEXT, PROBLEM, BEFORE, AFTER, REASON, SIDE-EFFECT, ACTION. If BEFORE or AFTER quotes exact document text, show it in a code block. REASON should include enough context (what prompted the change and why it matters) to stand on its own, not just a one-line justification. SIDE-EFFECT notes any other part of the document this change affects; if present, it is automatically added to the backlog (see Backlog below) rather than requiring separate approval here. ACTION is one of: Approve, Reject, Update, or Park/Later (which adds the item to the backlog). Wait for the user's ACTION before moving to the next item.
+
+**Backlog**: Items marked Park/Later, and SIDE-EFFECT entries recorded on items reviewed during that stage, are added to a running backlog list during Iterate (2) or Resolve (4). Iterate (2) cannot advance to Audit (3), and Resolve (4) cannot advance to Critical Check (5), while any backlog item raised in that stage remains open. Backlog items are re-presented using the same review format (CONTEXT/PROBLEM/BEFORE/AFTER/REASON/SIDE-EFFECT/ACTION) and closed via Approve, Reject, or Update.
 
 ## Gather (1)
 
@@ -31,6 +33,8 @@ Work with the user until they confirm the document is good (e.g. "this looks goo
 
 If new items are found during this phase, add them to the list rather than resolving them immediately — work through the list in order (FIFO) so nothing is missed or handled out of sequence.
 
+Cannot advance to Audit (3) while backlog items from this stage remain open — see Backlog.
+
 ## Audit (3)
 
 Run a full check against the draft. Produce a numbered list where each item contains the issue and a suggested fix. Check against the criteria the document type defines (e.g. a quality checklist, a words-to-avoid list, structural rules) plus these process-level checks that apply regardless of document type:
@@ -43,7 +47,9 @@ Present the complete list before making any changes.
 
 ## Resolve (4)
 
-Review the Audit (3) findings per the review format defined above. Apply only approved (or user-updated) changes. Before declaring a batch complete, cross-check the count and identifiers of items actually resolved against the original source list (e.g., the input change list or Gather-phase item list) — do not rely on sequential item-by-item narration alone to confirm full coverage, since an item can be silently skipped mid-sequence without the omission being obvious from the running commentary.
+Review the Audit (3) findings per the review format defined above. Apply only approved (or user-updated) changes. Before declaring a batch complete, cross-check the count and identifiers of items actually resolved against the original source list (e.g., the input change list or Gather-phase item list) — do not rely on sequential item-by-item narration alone to confirm full coverage, since an item can be silently skipped mid-sequence without the omission being obvious from the running commentary. Items closed via Park/Later count as accounted-for in this cross-check, not as omissions.
+
+Cannot advance to Critical Check (5) while backlog items from this stage remain open — see Backlog.
 
 ## Critical Check (5)
 
