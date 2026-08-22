@@ -67,6 +67,7 @@ No file under `{workspace}\skills\<skill-name>`, `{workspace}\templates`, or `pr
 Skill-specific detail for each stage:
 
 - **Gather (1)**: For a new skill, fill in the SKILL.md template section by section, against the template as-is — don't pause to evaluate template gaps. For a revision to an existing skill, gather the specific list of changes or feedback to address. Add bundled resources (scripts/references/assets) only for content that would push SKILL.md over a reasonable length, needs worked examples, or is executable logic better run than described.
+- **Iterate (2)**: When a single approved change affects more than one location in the SKILL.md (e.g., a renamed field, or a rule that must stay consistent across "Writing each column" and "Audit criteria"), present all affected locations together under one item number, not as separate items — keeps directly-related edits atomic in the approval flow.
 - **Audit (3)**: In addition to doc-workflow's process-level checks, check for:
   - Ambiguity: any instruction that could be interpreted more than one way
   - Independence violations: any reference to another skill in this workspace by name, path, or file link (see SKILL DESIGN CONSTRAINT)
