@@ -1,6 +1,6 @@
 ---
 name: doc-workflow
-description: Generic Gather → Iterate → Audit → Resolve → Critical Check → Write → Skill Improvement workflow for creating or updating any structured document (requirements docs, test plans, design specs, agent instructions, etc.) issue-by-issue rather than in bulk. Use whenever the user asks to create, write, draft, or update this kind of document, even without saying "review" or "workflow" explicitly. Defines the review PROCESS only — sections, formatting, and audit criteria come from the document type itself or the user's stated preferences.
+description: Generic Gather → Iterate → Audit → Resolve → Critical Check → Write → Skill Improvement → Calling Instructions Improvement workflow for creating or updating any structured document (requirements docs, test plans, design specs, agent instructions, etc.) issue-by-issue rather than in bulk. Use whenever the user asks to create, write, draft, or update this kind of document, even without saying "review" or "workflow" explicitly. Defines the review PROCESS only — sections, formatting, and audit criteria come from the document type itself or the user's stated preferences.
 ---
 
 # Document Workflow
@@ -38,8 +38,10 @@ Cannot advance to Audit (3) while backlog items from this stage remain open — 
 ## Audit (3)
 
 Run a full check against the draft. Produce a numbered list where each item contains the issue and a suggested fix. Check against the criteria the document type defines (e.g. a quality checklist, a words-to-avoid list, structural rules) plus these process-level checks that apply regardless of document type:
+- **Ambiguity** — any instruction that could be interpreted more than one way
 - **Duplication** — the same content appearing in more than one place; identify which location should be the single source of truth and suggest removing/deferring elsewhere
 - **Errors** — inconsistent, contradicts other content, or missing something the document type requires
+- **References** — every pointer from one part of the document (or its bundled files) to another resolves to something that actually exists
 
 For an update to an already-written document, scope the audit to the changed content and its interactions with the rest of the document, not the full previously-approved baseline.
 
@@ -61,8 +63,18 @@ Show a summary diff of what will change in the file (or the full draft, for a ne
 
 If the document type defines version/revision-tracking fields (e.g. a Version number, a Revision History section), update them as part of this step, per that document type's own rules.
 
-## Skill Improvement (7) — high-impact only
+## Skill Improvement (7)
 
-Runs only after Write (6) completes, and only if something from this session revealed a genuine gap in the calling document-type skill itself (or in this workflow skill, if the process itself caused the friction) — not a one-off preference or minor cleanup specific to this document. Skills are meant to stay universal across all documents of that type; don't propose a change that would make one more restrictive or narrow it to this session's specific case.
+Runs only after Write (6) completes. Review this session for any gap in the calling document-type skill itself (or in this workflow skill, if the process itself caused the friction). Tag each finding:
+- **[MINOR]** — a one-off preference, wording tweak, or cleanup specific to this document. Note it, but do not propose a SKILL.md change for it.
+- **[MAJOR]** — a gap with meaningful, recurring impact across future documents of that type — not just this session's specific case.
 
-If a high-impact improvement is identified, propose the specific SKILL.md change to the user explicitly — what and why, and which skill file it belongs in — and only edit it if they approve. If nothing high-impact came up, say so rather than skipping the step silently.
+Propose SKILL.md changes only for [MAJOR] findings — the specific change, what and why, and which skill file it belongs in — and only edit it if the user approves. If no [MAJOR] findings, say so, with a one-line mention of any [MINOR] items noted, rather than skipping the step silently. Skills are meant to stay universal across all documents of that type; don't propose a change that would make one more restrictive or narrow it to this session's specific case.
+
+## Calling Instructions Improvement (8) — when invoked from separate process instructions
+
+Runs only after Skill Improvement (7) completes, and only when this session is operating within a project that has its own instructions document (e.g. a project set up to develop custom GPT instructions, or a project set up to develop AI skills) — not by searching a repository for one; if no such project instructions document governs this session, skip this step entirely. Review this session's process against that calling document, using the same [MINOR]/[MAJOR] tagging as Skill Improvement (7):
+- **[MINOR]** — note it, but do not propose an edit.
+- **[MAJOR]** — a reusable process step or clarification worth adding, an existing instruction that caused real ambiguity or friction, or an instruction that proved unnecessary or harmful.
+
+Propose [MAJOR] changes to the user explicitly — what would change and why — and only update if they approve. If no [MAJOR] findings, say so, with a one-line mention of any [MINOR] items noted, rather than skipping the step silently. Skip this step entirely if there is no separate calling instructions document.
