@@ -1,22 +1,22 @@
-=== TEMPLATE NOTES =================================================
+{ TEMPLATE NOTES
 
-Delete this block when generating the actual SKILL.md.
+This file is a template for authoring a new skill's SKILL.md. It has three parts: this instructional notes block (delete it before generating the actual SKILL.md), the YAML frontmatter that follows (name and description — always loaded into context; the description is what decides whether the skill triggers), and the body after that (the skill's actual instructions — loaded into context only once the skill triggers).
 
-CORE sections are required in every skill.
-
-OPTIONAL sections are included only when the noted condition applies; delete the section otherwise.
+Sections in the body are marked CORE or OPTIONAL. CORE sections are required in every skill. OPTIONAL sections are included only when the noted condition applies; delete the section otherwise.
 
 LENGTH GUIDANCE:
 
-Metadata (name + description in frontmatter) — always loaded into context; keep description to roughly 100-150 words, but prioritize concrete, specific trigger phrasing over hitting that number exactly.
+Metadata (name + description in frontmatter) — keep description to roughly 100-150 words, but prioritize concrete, specific trigger phrasing over hitting that number exactly.
 
-SKILL.md body — loaded into context only when the skill triggers; keep under 500 lines as a soft target.
+SKILL.md body — keep under 500 lines as a soft target.
 
 Bundled resources (flat files: ref-<name>.txt, asset-<name>.<ext>, script-<name>.<ext>) — loaded only as needed, no length limit. No scripts/, references/, or assets/ subfolders — the filename prefix carries the category.
 
 If the body is approaching 500 lines: don't cut content or weaken instructions — move detail that's reference material (worked examples, large tables, domain-specific variants) into a ref-<name>.txt file and leave a pointer sentence in SKILL.md. Executable, deterministic, or repetitive logic belongs in a script-<name>.<ext> file, not prose.
 
-REFERENCES-POINTER CONVENTION: when the body needs to point to a bundled file, name it inline in a sentence — "See ref-<name>.txt for ..." or "Use asset-<name>.<ext> as ...". Never write a subfolder-style path.
+REFERENCES-POINTER CONVENTION:
+
+When the body needs to point to a bundled file, name it inline in a sentence — "See ref-<name>.txt for ..." or "Use asset-<name>.<ext> as ...". Never write a subfolder-style path.
 
 FORMAT:
 
@@ -24,13 +24,11 @@ The generated SKILL.md body follows this plain text formatting hierarchy, not ma
 
 Levels:
 
-  SECTION      — top level, ALL CAPS, flush left. Content always starts on a new line below the heading.
+  SECTION      — top level, ALL CAPS, no prefix, flush left. Content always starts on a new line below the heading.
 
-  Label        — sub-level under a SECTION, title case with every word capitalized, no colon, no inline content — a standalone heading only. Optionally starts with a bracketed uppercase letter ("[A] Label Text") when the SECTION has multiple Labels that must appear in a fixed order; omit the bracket when order doesn't matter.
+  Label        — sub-level under a section, title case with every word capitalized, no colon, no inline content — a standalone heading only. Optionally start with a bracketed uppercase letter ("[A] Gather Inputs") when the section has multiple Labels that must appear in a fixed order; omit the bracket when order doesn't matter.
 
-  Sub Label:   — sub-level under a Label, sentence case (only the first word capitalized) + colon. By default, SECTION, Label, and Sub Label are used in that order; a Sub Label may sit directly under a SECTION instead, only when the Label level is deliberately skipped. Content starts inline on the same line as the Sub Label, unless that content is itself a list — in which case it drops to the lines below instead. Optionally starts with a bracketed lowercase roman numeral ("[i] Sub label text:") when its parent has multiple Sub Labels that must appear in a fixed order; omit the bracket when order doesn't matter.
-
-  A bulleted or numbered list may also sit directly under a SECTION with no heading at all, when even a Label would be redundant.
+  Sub Label:   — sub-level under a Label, sentence case (only the first word capitalized) + colon, e.g. "Confirm format:". By default, SECTION, Label, and Sub Label are used in that order; a Sub Label may sit directly under a SECTION instead, only when the author deliberately skips the Label level. Optionally starts with a bracketed lowercase roman numeral ("[i] Confirm format:") when its parent has multiple Sub Labels that must appear in a fixed order; omit the bracket when order doesn't matter. Content starts inline on the same line as the Sub Label, unless that content is itself a list — in which case it drops to the lines below instead.
 
 Numbering & Bullets:
   - item       — bulleted, used within a list when the items have no required order.
@@ -38,14 +36,14 @@ Numbering & Bullets:
   Both markers are reserved for list content only — never used as a heading marker.
 
 Heading Order Markers:
-  [A] [B] ...  — uppercase letters in brackets, prefixed to a Label when its SECTION has multiple Labels that must appear in a fixed order. Always restarts at [A] within each new SECTION.
-  [i] [ii] ... — lowercase roman numerals in brackets, prefixed to a Sub Label when its parent Label has multiple Sub Labels that must appear in a fixed order. Always restarts at [i] within each new parent.
-  Both are optional and display-only: omit them when order doesn't matter, and never cite one in a cross-reference — refer to a Label or Sub Label by its text instead.
+  [A] [B] ...  — uppercase letters in brackets, prefixed to a Label when the section has multiple Labels that must appear in a fixed order. Always restarts at [A] within each new SECTION.
+  [i] [ii] ... — lowercase roman numerals in brackets, prefixed to a Sub Label when its parent (a Label, or a SECTION if Label was deliberately skipped) has multiple Sub Labels that must appear in a fixed order. Always restarts at [i] within each new parent.
+  Both are optional and display-only: omit them when order doesn't matter, and never cite one in a cross-reference — refer to a Label or Sub Label by its text instead, since the bracket is regenerated whenever the surrounding list is reordered or edited.
 
 Spacing Rules:
   2 blank lines above every SECTION heading.
-  1 blank line above every Label.
-  1 blank line above every Sub Label.
+  1 blank line above every Label, plain or lettered.
+  1 blank line above every Sub Label, plain or numbered with a roman numeral.
   1 blank line above any bulleted or numbered list, wherever it appears.
   No blank line between items within the same list — only before the list as a whole.
 
@@ -53,20 +51,28 @@ Not Allowed:
   No ** for bold, anywhere in the body.
   No backticks for code, anywhere in the body.
   No leading "> " used as a blockquote prefix, anywhere in the body.
-  No indentation anywhere in the body — every SECTION, Label, Sub Label, and list item starts flush left.
+  No line starting with # — triggers a heading in Markdown.
+  No indentation anywhere in the body — every SECTION, Label, Sub Label, and list item starts flush left, so the file reads identically whether viewed as plain text or rendered as Markdown.
 
 Bracket Usage Convention:
-  Curly braces { } — for authoring instructions and placeholders that must be removed entirely before generating the actual SKILL.md, including the {CORE} and {OPTIONAL...} tags.
+  Square brackets [ ] — for the heading order markers, and for informal placeholders inside an example (e.g. a literal suffix or an illustrative value).
   Angle brackets < > — the runtime-marker convention: an inline variable slot inside otherwise-fixed text, substituted with a real value when the skill is actually authored (e.g. ref-<name>.txt becomes ref-format.txt) — the surrounding text stays, only the bracketed part changes.
-  Square brackets [ ] — for the heading order markers above, and for informal, illustrative placeholders shown specifically inside a worked example.
-  Hex colors are written without a # prefix (not bracketed).
+  Curly braces { } — for instructional notes or template placeholders meant to be removed before the document is finalized (e.g. {insert customer name here}).
+  Parentheses ( ) — used as needed within the document for ordinary sentence formatting, not a special notation.
 
 Line Wrapping:
   Do not manually break a sentence or paragraph across multiple lines. Write each as one continuous line and let the viewing editor's soft wrap handle the visual line breaks.
 
+Style Preferences:
+  Prefer a list over a paragraph once content would otherwise cover more than two distinct points — a list reads more clearly than a long paragraph. This governs content written under a Label or Sub Label; it doesn't apply to the definitional lines in Levels, which intentionally state one heading type per line regardless of point count.
+  Prefer parentheses over a paired em dash for a parenthetical aside (e.g. this clause). Does not apply to the single em dash used as the term-definition separator throughout this document (e.g. "SECTION — top level...").
+
+Compliance Check:
+  When this convention is applied to a document that doesn't follow it, list the specific non-compliant points and offer to update them; apply changes only after the user confirms.
+
 Frontmatter stays YAML.
 
-=====================================================================
+}
 
 
 ---
