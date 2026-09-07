@@ -1,54 +1,67 @@
 PURPOSE
+
 Develop and maintain custom Skills for AI agents. Each Skill = one folder named after the skill, containing a SKILL.md, and zero or more bundled resources (ref-<name>.txt, asset-<name>.<ext>, script-<name>.<ext>). A local git repo is the working source of truth.
 
 
 SESSION START
+
 At the start of every session:
+
 - Confirm the doc-workflow skill is loaded and available - this is a hard requirement, and skill development cannot proceed without it. If it is not, stop and ask the user to provide it before doing anything else.
+- Confirm the text-style-guide skill is loaded and available - this is a hard requirement, and skill development cannot proceed without it. If it is not, stop and ask the user to provide it before doing anything else.
 - If {workspace} is not known, ask for it
 - Ask whether this session is working on one skill, or on a shared workspace-level file instead (templates/SKILL-template.md, or project-instructions.txt itself). If a skill, ask which skill-name. If a shared file, confirm which one.
 
 
 ONE SKILL PER SESSION
+
 One skill development, OR one shared workspace-level file (templates/SKILL-template.md, or project-instructions.txt itself), per session. A session is one chat window and its stream of messages. If the user asks to switch to a different skill, a different shared file, or from one to the other, stop and ask them to start a new chat session.
 
 
 WORKSPACE FOLDER
+
 The workspace folder path is not fixed in these instructions. Once given, use it for the rest of the session - do not ask again unless the user indicates it changed. Below it is referred to as {workspace}.
 
 
 SOURCE OF TRUTH
+
 Local copies under {workspace}\ are authoritative for day-to-day work.
 
 Templates:
+
 - Always check templates/SKILL-template.md against the local copies.
 
-Skill folder names use lowercase-hyphenated naming and should stay concise - abbreviate long or multi-word descriptors where the meaning stays clear (e.g. eng-reqs, doc-workflow) rather than spelling out every word. This matches the skill's own `name:` frontmatter field. The `description:` frontmatter must clearly state both what the skill does and when to trigger it, including phrasing variations a user might actually type - check this during Audit.
+Skill folder names use lowercase-hyphenated naming and should stay concise - abbreviate long or multi-word descriptors where the meaning stays clear (e.g. eng-reqs, doc-workflow) rather than spelling out every word. This matches the skill's own name: frontmatter field.
+
+- The name: frontmatter field must match the skill folder name.
+- The description: frontmatter must clearly state both what the skill does and when to trigger it, including phrasing variations a user might actually type - check this during Audit.
 
 The file inside every skill folder must be named exactly SKILL.md - this is a hard requirement of the skill-loading format, not a style choice. Never rename it, even for local tracking purposes (use a separately-named copy elsewhere in {workspace} if personal version tracking outside git is wanted).
 
 Bundled resources (only when needed):
+
 - ref-<name>.txt - docs loaded into context as needed, not by default. Use .md instead of .txt only if the content is meant to render as markdown elsewhere.
 - asset-<name>.<ext> - files used in the skill's output (templates, icons, fonts), native extension.
 - script-<name>.<ext> - executable code for deterministic/repetitive tasks.
 
-Add a bundled resource only for content that would push SKILL.md over a reasonable length, needs worked examples, or is executable logic better run than described.
+Add a bundled resource only when the content:
+
+- Would push SKILL.md over a reasonable length
+- Needs worked examples
+- Is executable logic better run than described
 
 No scripts/, references/, or assets/ subfolders. A skill's folder is flat: SKILL.md plus as many of these prefixed files as needed, directly inside the skill's own folder.
 
 
 WORKSPACE STRUCTURE
-{workspace}
-  readme.md
-  project-instructions.txt
-  templates/
-    SKILL-template.md
-  skills/
-    <skill-name>/
-      SKILL.md
-      ref-<name>.txt      (optional, as many as needed)
-      asset-<name>.<ext>  (optional, as many as needed)
-      script-<name>.<ext> (optional, as many as needed)
+
+- {workspace}\readme.md
+- {workspace}\project-instructions.txt
+- {workspace}\templates\SKILL-template.md
+- {workspace}\skills\<skill-name>\SKILL.md
+- {workspace}\skills\<skill-name>\ref-<name>.txt (optional, as many as needed)
+- {workspace}\skills\<skill-name>\asset-<name>.<ext> (optional, as many as needed)
+- {workspace}\skills\<skill-name>\script-<name>.<ext> (optional, as many as needed)
 
 No subfolders inside a skill's folder - every bundled file sits flat alongside SKILL.md, with its category carried by the filename prefix.
 
@@ -56,10 +69,12 @@ Always confirm with the user which skill-name we will be working on.
 
 
 WORKING FILES
-Temporary or scratch files may be created as needed during a session - for example, to preserve working context across a context compaction - without being subject to the workflow's write-gating rule. These are not part of the workspace structure above and must never be placed under `{workspace}\skills\<skill-name>`, `{workspace}\templates`, or saved as `project-instructions.txt` itself. They carry no authority and are discarded once the session's real output is written.
+
+Temporary or scratch files may be created as needed during a session - for example, to preserve working context across a context compaction - without being subject to the workflow's write-gating rule. These are not part of the workspace structure above and must never be placed under {workspace}\skills\<skill-name>, {workspace}\templates, or saved as project-instructions.txt itself. They carry no authority and are discarded once the session's real output is written.
 
 
 SKILL DESIGN CONSTRAINT
+
 Every skill must be fully independent - it must never reference another skill in this workspace by name, path, or file link, and must not assume another specific skill is also loaded. This is a hard constraint: skills get attached to a project/chat individually or in combination, and each one's description must be able to trigger and its content must be able to run correctly whether it is the only skill attached or one of several. This constraint is already encoded in templates/SKILL-template.md - do not design around it. Check every skill against this constraint during Audit.
 
 Do not confuse this with using the AI platform's own general-purpose built-in capabilities (e.g. its native document-format tooling) - checking what's available on the platform and using the appropriate built-in capability when one exists is fine; the independence rule is specifically about not creating dependencies between skills in this workspace.
@@ -69,16 +84,19 @@ WORKFLOW
 
 Skill development follows the doc-workflow skill's process.
 
-The "document" being built here is a SKILL.md (and its bundled resources), defined by `templates/SKILL-template.md`.
+Any .md or .txt file created or modified in this workspace follows the text-style-guide skill's formatting conventions. Compliance is checked during the Audit (3) stage.
+
+The "document" being built here is a SKILL.md (and its bundled resources), defined by templates/SKILL-template.md.
 
 Additional project-specific detail that applies within the workflow:
 
-- **When iterating on approved changes**: When a single approved change affects more than one location in the SKILL.md (e.g., a renamed field, or a rule that must stay consistent across "Writing each column" and "Audit criteria"), present all affected locations together under one item number, not as separate items - keeps directly-related edits atomic in the approval flow.
-- **When writing final files**: Write to `{workspace}\skills\<skill-name>`. Overwrite any existing files - all files are under git control.
-- **When the session targets the shared template itself**: the "document" being built is `templates/SKILL-template.md`, and reference material may be whatever the user supplies (e.g. templates from another platform) rather than an existing skill's SKILL.md. Write the final file to `templates/SKILL-template.md`, following the same overwrite rule.
+- When iterating on approved changes: When a single approved change affects more than one location in the SKILL.md (e.g., a renamed field, or a rule that must stay consistent across "Writing each column" and "Audit criteria"), present all affected locations together under one item number, not as separate items - keeps directly-related edits atomic in the approval flow.
+- When writing final files: Write to {workspace}\skills\<skill-name>. Overwrite any existing files - all files are under git control.
+- When the session targets the shared template itself: the "document" being built is templates/SKILL-template.md, and reference material may be whatever the user supplies (e.g. templates from another platform) rather than an existing skill's SKILL.md. Write the final file to templates/SKILL-template.md, following the same overwrite rule.
 
 
 OUT OF SCOPE
+
 - Skills that reference or depend on other skills in this workspace by name
 - Renaming the SKILL.md file itself for any reason
 - Packaging or publishing a skill
