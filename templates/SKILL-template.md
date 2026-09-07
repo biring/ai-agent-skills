@@ -50,71 +50,11 @@ When the body needs to point to a bundled file, name it inline in a sentence —
 
 FORMAT
 
-The generated SKILL.md body follows this plain text formatting hierarchy, not markdown.
+The generated SKILL.md body follows the plain text formatting convention defined by the text-style-guide skill (headings, lists, spacing, and other structural rules) — not markdown.
 
-Levels
+If the text-style-guide skill is loaded in this workspace, use it to format the generated SKILL.md body. If it is not loaded, ask the user to add it rather than improvising a convention here.
 
-Section: top level, ALL CAPS, no prefix, flush left. Content always starts on a new line below the heading.
-
-Label: sub-level under a section, title case with every word capitalized, no colon, no inline content — a standalone heading only. Optionally starts with a bracketed uppercase letter ("[A] Gather Inputs") when the section has multiple Labels that must appear in a fixed order; omit the bracket when order doesn't matter.
-
-Sub label: sub-level under a Label, sentence case (only the first word capitalized) + colon, e.g. "Confirm format:". By default, SECTION, Label, and Sub Label are used in that order; a Sub Label may sit directly under a SECTION instead, only when the author deliberately skips the Label level. Optionally starts with a bracketed lowercase roman numeral ("[i] Confirm format:") when its parent has multiple Sub Labels that must appear in a fixed order; omit the bracket when order doesn't matter. Content starts inline on the same line as the Sub Label, unless that content is itself a list — in which case it drops to the lines below instead.
-
-Numbering & Bullets
-
-Bulleted marker: a leading "- " (e.g. "- item") is used within a list when the items have no required order.
-
-Numbered marker: a leading number and period (e.g. "1. item") is used within a list when sequence or order matters.
-
-Both markers are reserved for list content only — never used as a heading marker.
-
-Heading Order Markers
-
-Uppercase letters in brackets: [A] [B] ... are prefixed to a Label when the section has multiple Labels that must appear in a fixed order; always restarts at [A] within each new SECTION.
-
-Lowercase roman numerals in brackets: [i] [ii] ... are prefixed to a Sub Label when its parent (a Label, or a SECTION if Label was deliberately skipped) has multiple Sub Labels that must appear in a fixed order; always restarts at [i] within each new parent.
-
-Both are optional and display-only: omit them when order doesn't matter, and never cite one in a cross-reference — refer to a Label or Sub Label by its text instead, since the bracket is regenerated whenever the surrounding list is reordered or edited.
-
-Spacing Rules
-
-- 2 blank lines above every SECTION heading.
-- 1 blank line above every Label, plain or lettered.
-- 1 blank line above every Sub Label, plain or numbered with a roman numeral.
-- 1 blank line above any bulleted or numbered list, wherever it appears.
-- No blank line between items within the same list — only before the list as a whole.
-
-Not Allowed
-
-- No ** for bold, anywhere in the body.
-- No backticks for code, anywhere in the body.
-- No leading "> " used as a blockquote prefix, anywhere in the body.
-- No line starting with # — triggers a heading in Markdown.
-- No indentation anywhere in the body — every SECTION, Label, Sub Label, and list item starts flush left, so the file reads identically whether viewed as plain text or rendered as Markdown.
-
-Bracket Usage Convention
-
-Square brackets [ ]: for the heading order markers, and for informal placeholders inside an example (e.g. a literal suffix or an illustrative value).
-
-Angle brackets < >: the runtime-marker convention — an inline variable slot inside otherwise-fixed text, substituted with a real value when the skill is actually authored (e.g. ref-<name>.txt becomes ref-format.txt); the surrounding text stays, only the bracketed part changes.
-
-Curly braces { }: for instructional notes or template placeholders meant to be removed before the document is finalized (e.g. {insert customer name here}).
-
-Parentheses ( ): used as needed within the document for ordinary sentence formatting, not a special notation.
-
-Line Wrapping
-
-Do not manually break a sentence or paragraph across multiple lines. Write each as one continuous line and let the viewing editor's soft wrap handle the visual line breaks.
-
-Style Preferences
-
-Lists over paragraphs: prefer a list over a paragraph once content would otherwise cover more than two distinct points — a list reads more clearly than a long paragraph. This governs content written under a Label or Sub Label; it doesn't apply to the definitional lines in Levels, which intentionally state one heading type per line regardless of point count.
-
-Parentheses over em dash: prefer parentheses over a paired em dash for a parenthetical aside (e.g. this clause). Does not apply to the single em dash used as the term-definition separator throughout this document (e.g. "SECTION — top level...").
-
-Compliance Check
-
-When this convention is applied to a document that doesn't follow it, list the specific non-compliant points and offer to update them; apply changes only after the user confirms.
+This note is deleted along with the rest of this instructional-notes block before the actual SKILL.md is generated, so naming text-style-guide here does not violate the Independence Constraint above — the generated skill's own body still never names another skill.
 
 }
 
