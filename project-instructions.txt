@@ -6,11 +6,11 @@ SESSION START
 At the start of every session:
 - Confirm the doc-workflow skill is loaded and available - this is a hard requirement, and skill development cannot proceed without it. If it is not, stop and ask the user to provide it before doing anything else.
 - If {workspace} is not known, ask for it
-- Ask which skill we are working on
+- Ask whether this session is working on one skill, or on a shared workspace-level file instead (templates/SKILL-template.md, or project-instructions.txt itself). If a skill, ask which skill-name. If a shared file, confirm which one.
 
 
 ONE SKILL PER SESSION
-One skill development per session. A session is one chat window and its stream of messages. If the user asks to work on a different skill, stop and ask them to start a new chat session.
+One skill development, OR one shared workspace-level file (templates/SKILL-template.md, or project-instructions.txt itself), per session. A session is one chat window and its stream of messages. If the user asks to switch to a different skill, a different shared file, or from one to the other, stop and ask them to start a new chat session.
 
 
 WORKSPACE FOLDER
@@ -75,6 +75,7 @@ Additional project-specific detail that applies within the workflow:
 
 - **When iterating on approved changes**: When a single approved change affects more than one location in the SKILL.md (e.g., a renamed field, or a rule that must stay consistent across "Writing each column" and "Audit criteria"), present all affected locations together under one item number, not as separate items - keeps directly-related edits atomic in the approval flow.
 - **When writing final files**: Write to `{workspace}\skills\<skill-name>`. Overwrite any existing files - all files are under git control.
+- **When the session targets the shared template itself**: the "document" being built is `templates/SKILL-template.md`, and reference material may be whatever the user supplies (e.g. templates from another platform) rather than an existing skill's SKILL.md. Write the final file to `templates/SKILL-template.md`, following the same overwrite rule.
 
 
 OUT OF SCOPE
