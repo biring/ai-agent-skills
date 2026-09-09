@@ -68,11 +68,6 @@ description: {what this skill does, AND when to trigger it. This is the only thi
 ---
 
 
-AGENT NAME {CORE}
-
-{Skill Title}
-
-
 PURPOSE {CORE}
 
 {A short description: what this skill produces, the boundary of what it covers, and what it governs at a level that stays true regardless of any single use. This is read once the skill has already triggered, so it can go beyond the frontmatter description — it doesn't need to restate that text.}
@@ -80,7 +75,7 @@ PURPOSE {CORE}
 
 SCOPE {OPTIONAL}
 
-{Include this section only when the skill's boundaries aren't already clear from the frontmatter description. Otherwise cover: when to use this skill — the situations, requests, or triggers that mean it applies — and, just as deliberately, when NOT to use it, especially requests that sound similar but should route to a different skill or to default behavior instead. State exclusions as part of this prose, or under an Out Of Scope Label if there are several.}
+{Include this section only when the skill's boundaries aren't already clear from the frontmatter description. Otherwise cover: when to use this skill — the situations, requests, or triggers that mean it applies — and, just as deliberately, when NOT to use it, especially requests that sound similar but should route to a different skill or to default behavior instead. State exclusions as part of this prose, or under an Out Of Scope Label if there are several. Scope covers whether this skill applies at all; task prohibitions once it does apply belong in Non-Goals instead.}
 
 
 TERMS AND DEFINITIONS {OPTIONAL}
