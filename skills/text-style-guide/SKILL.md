@@ -81,6 +81,7 @@ Spacing Rules
 Not Allowed
 
 - No ** for bold, anywhere in the document.
+- No single * or _ for italics, anywhere in the document.
 - No backticks for code, anywhere in the document.
 - No leading "> " used as a blockquote prefix, anywhere in the document.
 - No # at the start of a line — it triggers a markdown heading.
@@ -147,7 +148,7 @@ VALIDATION AND SELF-CHECKS
 - Every list uses "- " for an unordered list or "1." numbering for an ordered list, matching whether order matters, never mixed within one list.
 - A bracket order marker ([A], [i], etc.) appears only where its parent has multiple labels or sub labels that must appear in a fixed order, and restarts correctly within each new parent.
 - Spacing matches Spacing Rules: 2 blank lines above every section, 1 above every label and sub label, 1 above every list, none between items in the same list.
-- None of the Not Allowed constructs appear anywhere (bold **, backticks, "> " blockquote prefix, a line starting with #, or any indentation).
+- None of the Not Allowed constructs appear anywhere (bold **, italics * or _, backticks, "> " blockquote prefix, a line starting with #, or any indentation).
 - Every bracket type (square, angle, curly, parentheses) is used only for its defined purpose in Bracket Usage Convention.
 - No sentence or paragraph is manually broken across lines.
 - Content under a label or sub label covering more than two distinct points is a list, not a paragraph (except the definitional lines under Levels).
