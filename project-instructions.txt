@@ -7,7 +7,7 @@ SESSION START
 
 At the start of every session:
 
-- Confirm the doc-workflow skill is loaded and available - this is a hard requirement, and skill development cannot proceed without it. If it is not, stop and ask the user to provide it before doing anything else.
+- Confirm the workflow-instructions skill is loaded and available - this is a hard requirement, and skill development cannot proceed without it. If it is not, stop and ask the user to provide it before doing anything else.
 - Confirm the text-style-guide skill is loaded and available - this is a hard requirement, and skill development cannot proceed without it. If it is not, stop and ask the user to provide it before doing anything else.
 - If {workspace} is not known, ask for it
 - Ask whether this session is working on one skill, or on a shared workspace-level file instead (templates/SKILL-template.md, or project-instructions.txt itself). If a skill, ask which skill-name. If a shared file, confirm which one.
@@ -15,7 +15,7 @@ At the start of every session:
 
 ONE SKILL PER SESSION
 
-One skill development, OR one shared workspace-level file (templates/SKILL-template.md, or project-instructions.txt itself), per session. A session is one chat window and its stream of messages. If the user asks to switch to a different skill, a different shared file, or from one to the other, stop and ask them to start a new chat session.
+One skill development, OR one shared workspace-level file (templates/SKILL-template.md, or project-instructions.txt itself), per session. Exception: renaming a skill may, in the same session, update every shared file that references the old name. A session is one chat window and its stream of messages. If the user asks to switch to a different skill, a different shared file, or from one to the other, stop and ask them to start a new chat session.
 
 
 WORKSPACE FOLDER
@@ -31,7 +31,7 @@ Templates:
 
 - Always check templates/SKILL-template.md against the local copies.
 
-Skill folder names use lowercase-hyphenated naming and should stay concise - abbreviate long or multi-word descriptors where the meaning stays clear (e.g. eng-reqs, doc-workflow) rather than spelling out every word. This matches the skill's own name: frontmatter field.
+Skill folder names use lowercase-hyphenated naming and should stay concise - abbreviate long or multi-word descriptors where the meaning stays clear (e.g. eng-reqs, rev-history) rather than spelling out every word. This matches the skill's own name: frontmatter field.
 
 - The name: frontmatter field must match the skill folder name.
 - The description: frontmatter must clearly state both what the skill does and when to trigger it, including phrasing variations a user might actually type - check this during Audit.
@@ -82,7 +82,7 @@ Do not confuse this with using the AI platform's own general-purpose built-in ca
 
 WORKFLOW
 
-Skill development follows the doc-workflow skill's process.
+Skill development follows the workflow-instructions skill's process. This includes every change to a skill, templates/SKILL-template.md, or project-instructions.txt - renames and one-line edits included - starting at Gather (1), with no direct edits outside the workflow.
 
 Any .md or .txt file created or modified in this workspace follows the text-style-guide skill's formatting conventions. Compliance is checked during the Audit (3) stage.
 

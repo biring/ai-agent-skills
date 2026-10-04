@@ -1,10 +1,10 @@
 ---
-name: doc-workflow
-description: Generic Gather → Iterate → Audit → Resolve → Critical Check → Write → Skill Improvement → Calling Instructions Improvement workflow for creating or updating any structured document (requirements docs, test plans, design specs, agent instructions, etc.) issue-by-issue rather than in bulk. Use whenever the user asks to create, write, draft, or update this kind of document, even without saying "review" or "workflow" explicitly. Defines the review PROCESS only — sections, formatting, and audit criteria come from the document type itself or the user's stated preferences.
+name: workflow-instructions
+description: Generic Gather → Iterate → Audit → Resolve → Critical Check → Write → Skill Improvement → Calling Instructions Improvement workflow for creating or updating any structured document (requirements docs, test plans, design specs, agent instructions, etc.) issue-by-issue rather than in bulk. Use whenever the user asks to create, write, draft, update, edit, rename, or restructure this kind of document (including changes that span several files), even without saying "review" or "workflow" explicitly. Defines the review PROCESS only — sections, formatting, and audit criteria come from the document type itself or the user's stated preferences.
 ---
 
 
-DOCUMENT WORKFLOW
+WORKFLOW INSTRUCTIONS
 
 A structured, issue-by-issue process for drafting or updating any document. This skill defines the process — the document type's own skill (or the user's stated preferences, if there is no specific skill) defines the content: what sections exist, what format the output is, and what to check for during Audit.
 
