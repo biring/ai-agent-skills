@@ -91,7 +91,7 @@ The "document" being built here is a SKILL.md (and its bundled resources), defin
 Additional project-specific detail that applies within the workflow:
 
 - When iterating on approved changes: When a single approved change affects more than one location in the SKILL.md (e.g., a renamed field, or a rule that must stay consistent across "Writing each column" and "Audit criteria"), present all affected locations together under one item number, not as separate items - keeps directly-related edits atomic in the approval flow.
-- When writing final files: Write to {workspace}\skills\<skill-name>. Overwrite any existing files - all files are under git control.
+- When writing final files: Write to {workspace}\skills\<skill-name>. Overwrite any existing files - all files are under git control. Preserve each file's existing line endings, and ignore line-ending-only differences when checking git status or diffs.
 - When the session targets the shared template itself: the "document" being built is templates/SKILL-template.md, and reference material may be whatever the user supplies (e.g. templates from another platform) rather than an existing skill's SKILL.md. Write the final file to templates/SKILL-template.md, following the same overwrite rule.
 
 
