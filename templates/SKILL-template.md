@@ -5,8 +5,8 @@ OVERVIEW
 
 This file is a template for authoring a new skill's SKILL.md. It has three parts, listed below.
 
-- This instructional notes block (delete it before generating the actual SKILL.md).
-- The YAML frontmatter that follows (name and description — always loaded into context; the description is what decides whether the skill triggers).
+- This instructional notes block (delete it, including the opening and closing curly braces, before generating the actual SKILL.md; line 1 of the generated SKILL.md must be the opening --- of the frontmatter, or the frontmatter will not be recognized).
+- The YAML frontmatter that follows (name and description, always loaded into context, plus an optional compatibility field; the description is what decides whether the skill triggers).
 - The body after that (the skill's actual instructions — loaded into context only once the skill triggers).
 
 
@@ -27,25 +27,51 @@ Sections in the body are marked CORE or OPTIONAL.
 - CORE sections are required in every skill.
 - OPTIONAL sections are included only when the condition stated in their placeholder text applies; delete the section otherwise.
 - These aren't the only sections a skill can have — add any other section this skill genuinely needs that isn't covered by one of the ones listed.
-- The OPTIONAL sections here were added based on lessons learned and continuous improvement across skills already built in this workspace, so consider each one rather than skipping it by default — it may be the reason it exists is that a past skill needed exactly this.
+- The OPTIONAL sections here were added based on lessons learned and continuous improvement across skills already built in this workspace, so consider each one rather than skipping it by default (each likely exists because a past skill needed exactly this).
 - Section order in the body does not affect how the skill runs. The order below is a suggested default flow for readability, not a requirement — reorder sections if a different sequence reads more clearly for a particular skill.
 - Add a section only when its content genuinely earns a standalone heading. If a concept only needs a line or two, fold it into the most relevant existing section instead of creating a new one to hold it — a template that grows a section for every small idea gets harder to use, not more complete. Apply the same judgment in the other direction too: if an existing section is quietly covering two distinct concerns (e.g. an imperative rule mixed with a scope boundary), split it into two rather than leaving them combined. Neither merging nor splitting is a mechanical rule — decide case by case which reads more clearly and stays easiest to maintain.
 
 
 LENGTH GUIDANCE
 
-Metadata: (name + description in frontmatter) keep description to roughly 100-150 words, but prioritize concrete, specific trigger phrasing over hitting that number exactly.
+Metadata: (name + description in frontmatter) the description may use up to its 1024-character hard limit (see the description placeholder).
+
+- The limit is counted in characters, including spaces and punctuation, not words; check the actual character count rather than estimating from a word count.
+- Spend that length on concrete trigger phrases, the default behavior, and exclusions.
+- Do not pad it with generic category words or restated detail from the body, since the description is loaded into context for every conversation where this skill is attached.
 
 Skill body: the SKILL.md body should stay under 500 lines as a soft target.
 
-Bundled resources: flat files (ref-<name>.txt, asset-<name>.<ext>, script-<name>.<ext>) are loaded only as needed, with no length limit. No scripts/, references/, or assets/ subfolders — the filename prefix carries the category.
+Bundled resources: flat files (ref-<name>.txt, asset-<name>.<ext>, script-<name>.<ext>) are loaded only as needed, with no length limit.
 
-If approaching the limit: if the body is approaching 500 lines, don't cut content or weaken instructions — move detail that's reference material (worked examples, large tables, domain-specific variants) into a ref-<name>.txt file and leave a pointer sentence in SKILL.md. Executable, deterministic, or repetitive logic belongs in a script-<name>.<ext> file, not prose.
+- No scripts/, references/, or assets/ subfolders; the filename prefix carries the category.
+- Any ref-<name>.txt file over about 300 lines starts with a table of contents listing its sections, so the relevant part can be located without reading the whole file.
+
+If approaching the limit: if the body is approaching 500 lines, don't cut content or weaken instructions — move detail that's reference material (worked examples, large tables, domain-specific variants) into a ref-<name>.txt file and point to it per REFERENCES-POINTER CONVENTION. Executable, deterministic, or repetitive logic belongs in a script-<name>.<ext> file, not prose.
 
 
 REFERENCES-POINTER CONVENTION
 
 When the body needs to point to a bundled file, name it inline in a sentence — "See ref-<name>.txt for ..." or "Use asset-<name>.<ext> as ...". Never write a subfolder-style path.
+
+
+WRITING STYLE
+
+This governs how the generated SKILL.md instructions are written, not the voice of the skill's own output (see STYLE & TONE for that).
+
+- Write instructions in imperative form ("Flag each missing field", not "The skill should flag each missing field").
+- Explain why a rule matters instead of relying on repeated MUST, NEVER, or ALWAYS (a model applies a rule more reliably when it understands the purpose).
+- Keep instructions general enough to cover realistic variations, not narrowed to the specific examples given.
+
+
+TESTING
+
+Before finalizing the skill, test both triggering and output.
+
+1. Write 2-3 realistic prompts a user would actually type that should trigger this skill.
+2. Write 1-2 similar-sounding prompts that should not trigger it (near-misses that belong to default behavior or a different kind of request).
+3. Run each prompt with this skill attached alone, then alongside other skills, and confirm it triggers (or does not) as expected and the output satisfies the CORE sections.
+4. Revise the description for triggering failures and the body for output failures, then rerun the failed prompts until each behaves as expected, or the user accepts the remaining failures.
 
 
 FORMAT
@@ -61,9 +87,11 @@ This note is deleted along with the rest of this instructional-notes block befor
 
 ---
 
-name: {skill-name, inline with the label, lowercase-hyphenated, matching the skill's folder name exactly}
+name: {skill-name, inline with the label, lowercase-hyphenated, matching the skill's folder name exactly. Hard limits: max 64 characters; lowercase letters, numbers, and hyphens only; must not contain the reserved words "anthropic" or "claude"; no XML tags.}
 
-description: {what this skill does, AND when to trigger it. This is the only thing used to decide whether the skill loads. Push for concrete trigger phrases a user would actually type ("make a deck," "build slides," "check this for brand compliance"), not generic category words alone. State what the skill always does by default so there's no ambiguity about when it applies. If another skill in this workspace covers a similar-sounding request, state the distinction here (not only in SCOPE) — this field is what actually decides triggering; SCOPE only helps once the skill has already loaded.}
+description: {what this skill does, AND when to trigger it. This is the only thing used to decide whether the skill loads. Push for concrete trigger phrases a user would actually type ("make a deck," "build slides," "check this for brand compliance"), not generic category words alone. State what the skill always does by default so there's no ambiguity about when it applies. If a similar-sounding request should not trigger this skill, state that exclusion here by request type (e.g. "Do NOT use for X requests"), never by naming another skill (see INDEPENDENCE CONSTRAINT). State it here, not only in SCOPE: this field decides triggering, while SCOPE only helps once the skill has already loaded. Write in third person (e.g. "Creates ...", "Use when ..."), not first or second person ("I can help you ...", "You can use this to ..."). Hard limits: must not be empty; max 1024 characters; no XML tags. The value must be valid YAML. If it contains a colon followed by a space, or starts with a quote, wrap the whole value in double quotes and use single quotes inside it.}
+
+compatibility: {OPTIONAL. Required tools, platforms, or dependencies this skill needs to run (e.g. code execution, network access). Rarely needed; delete this line if not used.}
 
 ---
 
@@ -75,7 +103,7 @@ PURPOSE {CORE}
 
 SCOPE {OPTIONAL}
 
-{Include this section only when the skill's boundaries aren't already clear from the frontmatter description. Otherwise cover: when to use this skill — the situations, requests, or triggers that mean it applies — and, just as deliberately, when NOT to use it, especially requests that sound similar but should route to a different skill or to default behavior instead. State exclusions as part of this prose, or under an Out Of Scope Label if there are several. Scope covers whether this skill applies at all; task prohibitions once it does apply belong in Non-Goals instead.}
+{Include this section only when the skill's boundaries aren't already clear from the frontmatter description. When included, cover: when to use this skill (the situations, requests, or triggers that mean it applies) and, just as deliberately, when NOT to use it, especially requests that sound similar but should route to a different skill or to default behavior instead. State exclusions as part of this prose, or under an "Out Of Scope" label if there are several. Scope covers whether this skill applies at all; task prohibitions once it does apply belong in Non-Goals instead.}
 
 
 TERMS AND DEFINITIONS {OPTIONAL}
@@ -85,12 +113,12 @@ TERMS AND DEFINITIONS {OPTIONAL}
 
 PRECONDITIONS {OPTIONAL}
 
-{Include when this skill cannot function without a specific capability, tool, or bundled file being available (e.g. code execution, network/web access, a particular file-format reader, a bundled ref-<name>.txt or script-<name>.<ext> this skill depends on). State what to verify before doing any other work, and what to tell the user if a precondition isn't met. Capabilities can become available mid-session (the user connects a tool or grants access), so state whether to wait/retry once available rather than assuming a permanent failure. Distinct from the INDEPENDENCE CONSTRAINT: this covers general capabilities and this skill's own bundled files, never a dependency on another named skill in this workspace.}
+{Include when this skill cannot function without a specific capability, tool, or bundled file being available (e.g. code execution, network/web access, a particular file-format reader, a bundled ref-<name>.txt or script-<name>.<ext> this skill depends on). State what to verify before doing any other work, and what to tell the user if a precondition isn't met. Capabilities can become available mid-session (the user connects a tool or grants access), so state whether to wait/retry once available rather than assuming a permanent failure. Distinct from the INDEPENDENCE CONSTRAINT: this covers general capabilities and this skill's own bundled files, never a dependency on another named skill in this workspace. Also distinct from the compatibility frontmatter field: compatibility only declares a dependency, while this section states how to verify it at runtime and what to do if it is missing.}
 
 
 INPUTS {OPTIONAL}
 
-{Include when the skill depends on specific required or optional information/materials. Otherwise cover: what this skill needs to run — what it cannot function without, and what improves the result but isn't required (with the fallback when it's absent). If required and optional genuinely split into two distinct lists, use Required and Optional Labels; otherwise describe inline. Also state what to do if a required input is missing or unclear — ask, reject, or apply a stated default; never fabricate it. If the skill proceeds without an optional input that would have improved the result, disclose that via Judgment Disclosure rather than silently omitting it.}
+{Include when the skill depends on specific required or optional information/materials. When included, cover: what this skill needs to run — what it cannot function without, and what improves the result but isn't required (with the fallback when it's absent). If required and optional genuinely split into two distinct lists, use "Required" and "Optional" labels; otherwise describe inline. Also state what to do if a required input is missing or unclear — ask, reject, or apply a stated default; never fabricate it. If the skill proceeds without an optional input that would have improved the result, disclose that via Judgment Disclosure rather than silently omitting it.}
 
 
 AMBIGUITY {OPTIONAL}
@@ -100,7 +128,7 @@ AMBIGUITY {OPTIONAL}
 
 ERROR HANDLING {OPTIONAL}
 
-{Include when input can be present but bad — malformed, partial, truncated, or internally conflicting (e.g. two files that disagree, a table missing expected rows) — a different problem than missing/unclear input, which INPUTS already covers. State how to detect the bad state, and whether to proceed with a flagged caveat, ask the user to fix it, or refuse to generate output.}
+{Include when input can be present but bad (malformed, partial, truncated, or internally conflicting, e.g. two files that disagree or a table missing expected rows), a different problem than missing/unclear input, which INPUTS already covers. State how to detect the bad state, and whether to proceed with a flagged caveat, ask the user to fix it, or refuse to generate output.}
 
 
 EDGE CASES {OPTIONAL}
@@ -110,7 +138,7 @@ EDGE CASES {OPTIONAL}
 
 WORKFLOW {OPTIONAL}
 
-{Include when the skill follows a specific sequence of steps, rather than being pure reference/guidance content. Otherwise cover: the sequence this skill follows, in actual execution order, ending with when the output is actually produced. If a step can't proceed until a condition is met (a prior step's approval, a check passing), state that condition explicitly rather than leaving it implied by step order. Covers only this skill's own execution sequence — not a specific in-output computation or reconciliation procedure (see Algorithm / Required Check for that). Use a numbered list when the steps have a required order; prose is fine otherwise.}
+{Include when the skill follows a specific sequence of steps, rather than being pure reference/guidance content. When included, cover: the sequence this skill follows, in actual execution order, ending with when the output is actually produced. If a step can't proceed until a condition is met (a prior step's approval, a check passing), state that condition explicitly rather than leaving it implied by step order. Covers only this skill's own execution sequence — not a specific in-output computation or reconciliation procedure (see Algorithm / Required Check for that). Use a numbered list when the steps have a required order; prose is fine otherwise.}
 
 
 ALGORITHM / REQUIRED CHECK {OPTIONAL}
@@ -125,27 +153,27 @@ STABLE-CONTENT CRITERIA {OPTIONAL}
 
 OUTPUT FORMAT {OPTIONAL}
 
-{Include when the skill produces a file or deliverable in a specific format/location. Otherwise cover: default output format/file type and location, and any alternate format the user can request instead. Covers only the container — what type of file and where it goes — not its content (see What This Skill Produces) or its mechanical encoding (see Formatting Rules).}
+{Include when the skill produces a file or deliverable in a specific format/location. When included, cover: default output format/file type and location, and any alternate format the user can request instead. Covers only the container (what type of file and where it goes), not its content (see What This Skill Produces) or its mechanical encoding (see Formatting Rules).}
 
 
 WHAT THIS SKILL PRODUCES {OPTIONAL}
 
-{Include when the output has a defined structure worth breaking down piece by piece. Otherwise cover: section-by-section (or field-by-field) breakdown of the deliverable's content, marking which pieces are always required vs. optional/ask-the-user. Covers only what content goes in the output — not the file type/location (see Output Format) or how that content is mechanically encoded (see Formatting Rules).}
+{Include when the output has a defined structure worth breaking down piece by piece. When included, cover: section-by-section (or field-by-field) breakdown of the deliverable's content, marking which pieces are always required vs. optional/ask-the-user. Covers only what content goes in the output — not the file type/location (see Output Format) or how that content is mechanically encoded (see Formatting Rules).}
 
 
 EXAMPLE {OPTIONAL}
 
-{Include when the output has structural rules (grouping, merging, tagging, conditional formats, etc.) that are easier to convey with a worked example than prose alone. Otherwise cover: one or more small worked examples showing the output structure in a representative scenario.}
+{Include when the output has structural rules (grouping, merging, tagging, conditional formats, etc.) that are easier to convey with a worked example than prose alone. When included, cover: one or more small worked examples showing the output structure in a representative scenario.}
 
 
 FORMATTING RULES {OPTIONAL}
 
-{Include only if the output format has structural rules that would otherwise be ambiguous or inconsistently applied, e.g. delimiter/encoding rules for a TSV, table conventions for a docx, heading levels for markdown. Otherwise cover: concrete, mechanical encoding rules — delimiters, encoding, column order, header requirements — for content already defined in What This Skill Produces. Not the file type/location (see Output Format) or which content exists (see What This Skill Produces).}
+{Include only if the output format has structural rules that would otherwise be ambiguous or inconsistently applied, e.g. delimiter/encoding rules for a TSV, table conventions for a docx, heading levels for markdown. When included, cover: concrete, mechanical encoding rules (delimiters, encoding, column order, header requirements) for content already defined in What This Skill Produces. Not the file type/location (see Output Format) or which content exists (see What This Skill Produces).}
 
 
 WRITE-TIME RULES {OPTIONAL}
 
-{Include only if this skill has side effects that happen specifically at write time beyond just saving the file: updating a version/metadata field, replacing vs. appending content, recomputing a checksum, etc. Otherwise cover: what changes automatically each time the file is written. If this skill updates existing content rather than generating fresh output, see Stable-Content Criteria for what must not be regenerated. If the skill has a machine-generated filename convention (e.g. embedding version/date/checksum), keep it here only — don't also expose it as a human-readable field inside the document; that field should stay a plain descriptive title. Covers only what changes at the moment of writing — not the file's type/location (see Output Format) or a name derived for something inside the output's content (see Naming Conventions).}
+{Include only if this skill has side effects that happen specifically at write time beyond just saving the file: updating a version/metadata field, replacing vs. appending content, recomputing a checksum, etc. When included, cover: what changes automatically each time the file is written. If this skill updates existing content rather than generating fresh output, see Stable-Content Criteria for what must not be regenerated. If the skill has a machine-generated filename convention (e.g. embedding version/date/checksum), keep it here only — don't also expose it as a human-readable field inside the document; that field should stay a plain descriptive title. Covers only what changes at the moment of writing — not the file's type/location (see Output Format) or a name derived for something inside the output's content (see Naming Conventions).}
 
 
 NAMING CONVENTIONS {OPTIONAL}
@@ -153,9 +181,9 @@ NAMING CONVENTIONS {OPTIONAL}
 {Include only when the output requires a name deterministically derived from other data (e.g. a generated identifier, a derived label, a name built from an existing field) — not a fixed set of allowed values (see Terms and Definitions for that), and not the output file's own filename (see Write-Time Rules for that). Give the exact derivation rule plus one worked example.}
 
 
-NON-GOALS {CORE}
+NON-GOALS {OPTIONAL}
 
-{Adjacent or tempting tasks this skill must never perform, even if related or requested — its scope boundaries. Use "Do NOT ..." form.}
+{Include when there are adjacent or tempting tasks this skill could plausibly drift into once triggered. When included, cover: adjacent or tempting tasks this skill must never perform once it has triggered, even if related or requested. Whether this skill applies at all belongs in SCOPE, not here. Use "Do NOT ..." form.}
 
 
 CONSTRAINTS {CORE}
@@ -170,12 +198,12 @@ INVARIANTS {OPTIONAL}
 
 RESPONSE FORMATTING {OPTIONAL}
 
-{Include when this skill's chat responses need formatting rules beyond the platform's own default (see Style And Tone for voice, not mechanics). State whether to use markdown (headers, bold, tables, code blocks) or plain text, and any rule for lists, numbers, units, or dates. Distinct from Formatting Rules, which covers the mechanical structure of a produced file/deliverable, not the chat response itself.}
+{Include when this skill's chat responses need formatting rules beyond the platform's own default (see Style & Tone for voice, not mechanics). State whether to use markdown (headers, bold, tables, code blocks) or plain text, and any rule for lists, numbers, units, or dates. Distinct from Formatting Rules, which covers the mechanical structure of a produced file/deliverable, not the chat response itself.}
 
 
 STYLE & TONE {OPTIONAL}
 
-{Include when this skill's output (chat responses, or any report/deliverable) needs a defined voice beyond the platform's own default. Otherwise cover: whether output should be factual and direct with no hedging, concise, formal/technical or casual, whether to quantify with numbers/units/thresholds rather than vague descriptors, and whether findings or issues should be flagged explicitly rather than softened. State only where this skill's needs diverge from or add to the platform's own default style.}
+{Include when this skill's output (chat responses, or any report/deliverable) needs a defined voice beyond the platform's own default. When included, cover: whether output should be factual and direct with no hedging, concise, formal/technical or casual, whether to quantify with numbers/units/thresholds rather than vague descriptors, and whether findings or issues should be flagged explicitly rather than softened. State only where this skill's needs diverge from or add to the platform's own default style.}
 
 
 VALIDATION AND SELF-CHECKS {CORE}
