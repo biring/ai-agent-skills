@@ -50,11 +50,11 @@ When the body needs to point to a bundled file, name it inline in a sentence —
 
 FORMAT
 
-The generated SKILL.md body follows the plain text formatting convention defined by the text-style-guide skill (headings, lists, spacing, and other structural rules) — not markdown.
+The generated SKILL.md body follows the plain text formatting convention defined by the format-text-file skill (headings, lists, spacing, and other structural rules) — not markdown.
 
-If the text-style-guide skill is loaded in this workspace, use it to format the generated SKILL.md body. If it is not loaded, ask the user to add it rather than improvising a convention here.
+If the format-text-file skill is loaded in this workspace, use it to format the generated SKILL.md body. If it is not loaded, ask the user to add it rather than improvising a convention here.
 
-This note is deleted along with the rest of this instructional-notes block before the actual SKILL.md is generated, so naming text-style-guide here does not violate the Independence Constraint above — the generated skill's own body still never names another skill.
+This note is deleted along with the rest of this instructional-notes block before the actual SKILL.md is generated, so naming format-text-file here does not violate the Independence Constraint above — the generated skill's own body still never names another skill.
 
 }
 

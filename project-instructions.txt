@@ -8,7 +8,7 @@ SESSION START
 At the start of every session:
 
 - Confirm the workflow-instructions skill is loaded and available - this is a hard requirement, and skill development cannot proceed without it. If it is not, stop and ask the user to provide it before doing anything else.
-- Confirm the text-style-guide skill is loaded and available - this is a hard requirement, and skill development cannot proceed without it. If it is not, stop and ask the user to provide it before doing anything else.
+- Confirm the format-text-file skill is loaded and available - this is a hard requirement, and skill development cannot proceed without it. If it is not, stop and ask the user to provide it before doing anything else.
 - If {workspace} is not known, ask for it
 - Ask whether this session is working on one skill, or on a shared workspace-level file instead (templates/SKILL-template.md, or project-instructions.txt itself). If a skill, ask which skill-name. If a shared file, confirm which one.
 
@@ -84,7 +84,7 @@ WORKFLOW
 
 Skill development follows the workflow-instructions skill's process. This includes every change to a skill, templates/SKILL-template.md, or project-instructions.txt - renames and one-line edits included - starting at Gather (1), with no direct edits outside the workflow.
 
-Any .md or .txt file created or modified in this workspace follows the text-style-guide skill's formatting conventions. Compliance is checked during the Audit (3) stage.
+Any .md or .txt file created or modified in this workspace follows the format-text-file skill's formatting conventions. Compliance is checked during the Audit (3) stage.
 
 The "document" being built here is a SKILL.md (and its bundled resources), defined by templates/SKILL-template.md.
 

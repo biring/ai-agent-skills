@@ -1,14 +1,14 @@
 ---
 
-name: text-style-guide
+name: format-text-file
 
-description: Use when creating, updating, or editing a text document, or a section within another file type (such as a Word document or markdown file) that should keep a plain text style. Defines and enforces a consistent formatting convention covering headings, lists, spacing, and other structural rules, so text documents stay unambiguous and easy to read as raw text. Does not apply to tabular or delimited data files (.csv, .tsv, .xlsx). Actively checks documents in scope against this convention and flags anything non-compliant; applies fixes only after the user confirms, unless the user has granted an exception. Trigger phrases include: format as text, check text formatting, apply the text style guide, write this in plain text, keep this section plain text.
+description: Use when creating, updating, or editing a text document, or a section within another file type (such as a Word document or markdown file) that should keep a plain text style. Defines and enforces a consistent formatting convention covering headings, lists, spacing, and other structural rules, so text documents stay unambiguous and easy to read as raw text. Does not apply to tabular or delimited data files (.csv, .tsv, .xlsx). Actively checks documents in scope against this convention and flags anything non-compliant; applies fixes only after the user confirms, unless the user has granted an exception. Trigger phrases include: format as text, format text file, format this text file, check text formatting, write this in plain text, keep this section plain text.
 
 ---
 
 AGENT NAME
 
-text-style-guide
+format-text-file
 
 
 PURPOSE
