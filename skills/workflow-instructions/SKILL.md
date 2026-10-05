@@ -28,6 +28,7 @@ Review format: when presenting multiple items for review (the section/content li
 Each field follows these rules:
 
 - If BEFORE or AFTER quotes exact document text, show it in a code block.
+- Copy BEFORE text directly from the raw file content and confirm it matches exactly before presenting it; never reconstruct it from memory or a rendered view, since an inaccurate BEFORE can set a wrong premise for the change.
 - REASON should include enough context (what prompted the change and why it matters) to stand on its own, not just a one-line justification.
 - SIDE-EFFECT notes any other part of the document this change affects; if present, it is automatically added to the backlog (see Backlog below) rather than requiring separate approval here.
 - ACTION is one of: Approve, Reject, Update, or Backlog.
