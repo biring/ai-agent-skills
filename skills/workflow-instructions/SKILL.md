@@ -1,6 +1,6 @@
 ---
 name: workflow-instructions
-description: Generic Gather → Iterate → Audit → Resolve → Critical Check → Write → Skill Improvement → Calling Instructions Improvement workflow for creating or updating any structured document (requirements docs, test plans, design specs, agent instructions, etc.) issue-by-issue rather than in bulk. Use whenever the user asks to create, write, draft, update, edit, rename, or restructure this kind of document (including changes that span several files), even without saying "review" or "workflow" explicitly. Defines the review PROCESS only — sections, formatting, and audit criteria come from the document type itself or the user's stated preferences.
+description: Generic Gather → Iterate → Audit → Resolve → Critical Check → Write → Process Improvement workflow for creating or updating any structured document (requirements docs, test plans, design specs, agent instructions, etc.) issue-by-issue rather than in bulk. Use whenever the user asks to create, write, draft, update, edit, rename, or restructure this kind of document (including changes that span several files), even without saying "review" or "workflow" explicitly. Defines the review PROCESS only — sections, formatting, and audit criteria come from the document type itself or the user's stated preferences.
 ---
 
 
@@ -73,6 +73,7 @@ Run a full check against the draft. Produce a numbered list where each item cont
 - Errors: inconsistent, contradicts other content, or missing something the document type requires
 - References: every pointer from one part of the document (or its bundled files) to another resolves to something that actually exists
 - Readability: any single sentence that joins more than one rule or condition and should be split into short clauses or numbered sub-parts
+- Tracking fields: any tracking field (e.g. Version, Last updated, Revision History) in the document, or in the template used to create, update, or maintain it, that the planned changes don't update
 
 For a document that instructs an agent or defines a process, also check:
 
@@ -103,44 +104,43 @@ Cannot advance to Critical Check (5) while backlog items from this stage remain 
 
 CRITICAL CHECK (5)
 
-Re-run Audit (3) for critical or serious issues only (an issue that would make the document wrong, contradictory, or unusable if written now, not a wording or style preference). If any are found, go to Resolve (4). If none, confirm with the user before moving to Write (6).
+Re-run Audit (3) for critical or serious issues only (an issue that would make the document wrong, contradictory, or unusable if written now, not a wording or style preference).
+
+For an update to an existing file, also apply all approved changes to a working copy outside the output location, and treat any of these as a critical issue:
+
+- a BEFORE text not found exactly once
+- a diff against the original showing anything other than the approved changes
+- a change in encoding or line endings
+
+If any critical issues are found, go to Resolve (4). If none, confirm with the user before moving to Write (6).
 
 
 WRITE (6)
 
 Show a summary diff of what will change in the file (or the full draft, for a new document). This requires its own confirmation, separate from the stage-transition confirmation already given to enter this stage — only after the user confirms the write itself, write the file to the document type's defined output location and present it.
 
-If the document type defines version/revision-tracking fields (e.g. a Version number, a Revision History section), update them as part of this step, per that document type's own rules.
 
+PROCESS IMPROVEMENT (7)
 
-SKILL IMPROVEMENT (7)
+Runs only after Write (6) completes. Review this session for gaps in each of the following that applies:
 
-Runs only after Write (6) completes. Review this session for any gap in the calling document-type skill itself (or in this workflow skill, if the process itself caused the friction). Tag each finding:
+- Skills: every skill used in this session, including the document-type skill, this workflow skill, and any other skill loaded and applied
+- Templates: any template used to create, update, or maintain the document
+- Project instructions: the project's own instructions document, if one governs this session (identify it from the project itself, not by searching a repository for one)
 
-- MINOR: a one-off preference, wording tweak, or cleanup specific to this document. Note it, but do not propose a SKILL.md change for it.
-- MAJOR: a gap with meaningful, recurring impact across future documents of that type — not just this session's specific case.
+Do not report cosmetic or low-impact items (e.g. wording tweaks, one-off preferences).
 
-Then:
+Tag each finding (MAJOR if both apply):
 
-- Propose SKILL.md changes only for MAJOR findings (the specific change, what and why, and which skill file it belongs in).
-- Only edit a SKILL.md if the user approves.
-- If no MAJOR findings, say so, with a one-line mention of any MINOR items noted, rather than skipping the step silently.
-- Skills are meant to stay universal across all documents of that type; don't propose a change that would make one more restrictive or narrow it to this session's specific case.
-
-
-CALLING INSTRUCTIONS IMPROVEMENT (8) — WHEN INVOKED FROM SEPARATE PROCESS INSTRUCTIONS
-
-Runs only after Skill Improvement (7) completes, and only when this session is operating within a project that has its own instructions document (e.g. a project set up to develop custom GPT instructions, or a project set up to develop AI skills). Identify that document from the project itself, not by searching a repository for one. If no such project instructions document governs this session, skip this step entirely.
-
-Review this session's process against that calling document, using the same MINOR/MAJOR tagging as Skill Improvement (7):
-
-- MINOR: note it, but do not propose an edit.
-- MAJOR: a reusable process step or clarification worth adding, an existing instruction that caused real ambiguity or friction, or an instruction that proved unnecessary or harmful.
+- MINOR: caught late by the workflow (e.g. at Critical Check (5) instead of Audit (3))
+- MAJOR: found only by user probing (would have gone undetected), has recurring impact, or caused real ambiguity or friction
 
 Then:
 
-- Propose MAJOR changes to the user explicitly (what would change and why).
-- Only update if the user approves.
+- Propose changes only for MAJOR findings, grouped by file name (omit a group with no findings), each stating the specific change and what and why.
+- Only edit a file if the user approves.
 - If no MAJOR findings, say so, with a one-line mention of any MINOR items noted, rather than skipping the step silently.
+- Skills and templates are meant to stay universal across all documents of their type; don't propose a change that would make one more restrictive or narrow it to this session's specific case.
 
-The workflow is complete after Calling Instructions Improvement (8), or after Skill Improvement (7) when (8) is skipped.
+
+The workflow is complete after Process Improvement (7).
