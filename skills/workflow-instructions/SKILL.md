@@ -20,15 +20,17 @@ The user can move back to any earlier stage at any time to do more work (e.g., r
 
 Review format: when presenting multiple items for review (the section/content list in Iterate (2), or Audit (3) findings in Resolve (4)):
 
-1. Give a summary first, tagging each item New, Update, or Remove.
-2. Review items one at a time — never in bulk.
-3. Present each item with the following fields, each label on its own line, in all caps, with no colon after the label: CONTEXT, PROBLEM, BEFORE, AFTER, REASON, SIDE-EFFECT, ACTION.
-4. Wait for the user's ACTION before moving to the next item.
+1. Order the list so that any item another item depends on comes first, then number the items sequentially in that order. If two or more items depend on each other, merge them into one item.
+2. Give a summary first, tagging each item New, Update, or Remove.
+3. Review items one at a time, strictly in numbered order — never in bulk, and never out of the numbered sequence.
+4. Present each item with the following fields, each label on its own line, in all caps, with no colon after the label: CONTEXT, PROBLEM, BEFORE, AFTER, REASON, SIDE-EFFECT, ACTION.
+5. Wait for the user's ACTION before moving to the next item.
 
 Each field follows these rules:
 
 - If BEFORE or AFTER quotes exact document text, show it in a code block.
 - Copy BEFORE text directly from the raw file content and confirm it matches exactly before presenting it; never reconstruct it from memory or a rendered view, since an inaccurate BEFORE can set a wrong premise for the change.
+- If the text was changed by an earlier approved item not yet written, copy BEFORE from the current draft instead, state "Approved draft (not yet written)" on the line above its code block, and confirm it matches exactly.
 - REASON should include enough context (what prompted the change and why it matters) to stand on its own, not just a one-line justification.
 - SIDE-EFFECT notes any other part of the document this change affects; if present, it is automatically added to the backlog (see Backlog below) rather than requiring separate approval here.
 - ACTION is one of: Approve, Reject, Update, or Backlog.
@@ -52,14 +54,14 @@ Don't fabricate specific values (numbers, thresholds, names, dates) the user has
 
 Whenever it's unclear which section content belongs in, ask rather than deciding unilaterally.
 
-Output of this step: a short numbered summary list (1–2 sentences per item) of the sections/content items to work through in Iterate (2). Show the list and confirm with the user before moving to Iterate (2).
+Output of this step: a short numbered summary list (1–2 sentences per item) of the sections/content items to work through in Iterate (2), ordered and numbered per Review format. Show the list and confirm with the user before moving to Iterate (2).
 
 
 ITERATE (2)
 
-Work with the user until they confirm the document is good (e.g. "this looks good"). No changes to the section list itself during this phase.
+Work with the user until they confirm the document is good (e.g. "this looks good"). No changes to the document type's defined section list itself during this phase.
 
-If new items are found during this phase, add them to the list rather than resolving them immediately — work through the list in order (FIFO) so nothing is missed or handled out of sequence.
+If new items are found during this phase, add them to the list rather than resolving them immediately — work through the list in order (FIFO) so nothing is missed or handled out of sequence. Exception: if a new item is a dependency of an item not yet approved (including the item currently under review), insert it before that item, renumber the remaining unapproved items, pause the dependent item, and show the updated list before continuing.
 
 Cannot advance to Audit (3) while backlog items from this stage remain open — see Backlog.
 
