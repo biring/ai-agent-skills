@@ -34,13 +34,13 @@ Each field follows these rules:
 - REASON should include enough context (what prompted the change and why it matters) to stand on its own, not just a one-line justification.
 - SIDE-EFFECT notes any other part of the document this change affects; if present, it is automatically added to the backlog (see Backlog below) rather than requiring separate approval here.
 - ACTION is one of: Approve, Reject, Update, or Backlog.
+- When an item offers more than one option, label them Option A, Option B, and so on. Option A is always the recommended option, labelled "Option A (Recommended)". Show an AFTER for each option. Approve selects Option A. To choose any other option, the ACTION must name it (e.g. "Approve B").
 - For an item tagged New, state PROBLEM as N/A (this is new content) and leave BEFORE empty.
 
 Backlog: a running list kept during Iterate (2) and Resolve (4).
 
-- Items marked Backlog, and SIDE-EFFECT entries recorded on items reviewed during that stage, are added to the list.
-- Iterate (2) cannot advance to Audit (3), and Resolve (4) cannot advance to Critical Check (5), while any backlog item raised in that stage remains open.
-- Backlog items are re-presented using the same review format (CONTEXT/PROBLEM/BEFORE/AFTER/REASON/SIDE-EFFECT/ACTION) and closed via Approve, Reject, or Update.
+- Items marked Backlog, SIDE-EFFECT entries recorded on items reviewed during that stage, and findings from the Resolve (4) re-check are added to the list.
+- Backlog items are re-presented per Review format and closed via Approve, Reject, or Update.
 
 
 GATHER (1)
@@ -48,7 +48,7 @@ GATHER (1)
 Establish what needs to be created or changed — ask if not already stated.
 
 - For a new document: fill in sections one at a time, against the document type's defined section list as-is. Don't pause to evaluate whether that section list itself needs changing.
-- For an update to an existing document: gather the specific list of changes or feedback to address.
+- For an update to an existing document: gather the specific list of changes or feedback to address, and ask which other files, if any, share content with it (used by Cross-file duplication).
 
 Don't fabricate specific values (numbers, thresholds, names, dates) the user hasn't given you — flag them as placeholders (e.g. [TBD — confirm X]) rather than inventing them.
 
@@ -63,7 +63,7 @@ Work with the user until they confirm the document is good (e.g. "this looks goo
 
 If new items are found during this phase, add them to the list rather than resolving them immediately — work through the list in order (FIFO) so nothing is missed or handled out of sequence. Exception: if a new item is a dependency of an item not yet approved (including the item currently under review), insert it before that item, renumber the remaining unapproved items, pause the dependent item, and show the updated list before continuing.
 
-Cannot advance to Audit (3) while backlog items from this stage remain open — see Backlog.
+Cannot advance to Audit (3) while backlog items from this stage remain open.
 
 
 AUDIT (3)
@@ -71,7 +71,13 @@ AUDIT (3)
 Run a full check against the draft. Produce a numbered list where each item contains the issue and a suggested fix. Check against the criteria the document type defines (e.g. a quality checklist, a words-to-avoid list, structural rules) plus these process-level checks that apply regardless of document type:
 
 - Ambiguity: any instruction that could be interpreted more than one way
-- Duplication: the same content appearing in more than one place; identify which location should be the single source of truth and suggest removing/deferring elsewhere
+- Duplication: the same content appearing in more than one place; identify which location should be the single source of truth, and suggest replacing each other copy with a reference to it
+- Cross-file duplication: content in this document that is also written in another file (its bundled files, its template, the project's instructions, or any other file named in Gather (1)); apply the same fix as Duplication. If a copy must stay (e.g. the document must remain self-contained), keep it and say so in the finding.
+- Coupling: content in this document whose correctness depends on the details of another file's content (its rules, values, wording, or structure, such as its section names or numbers) without restating it word for word. Examples include a paraphrase, a summary, or an assumption about what that file says. Suggest referring to that file by name for the detail instead, so a change there cannot silently make this document wrong.
+- Hidden dependency: content that works only if another specific file is also loaded or present, without stating that as a requirement; suggest stating the requirement or removing the dependency.
+- Cohesion: content placed in a section whose purpose it does not serve, a section doing more than one job, or content that belongs to another document's role; suggest moving it to the section or document whose purpose it serves.
+- Necessity: a rule, case, or step with no current need, or a procedure more complex than its purpose requires; suggest removing or simplifying it.
+- Terminology: one concept called by different names, or one name used for different concepts; suggest one term per concept, used everywhere.
 - Errors: inconsistent, contradicts other content, or missing something the document type requires
 - References: every pointer from one part of the document (or its bundled files) to another resolves to something that actually exists
 - Readability: any single sentence that joins more than one rule or condition and should be split into short clauses or numbered sub-parts
@@ -93,15 +99,17 @@ RESOLVE (4)
 
 Review the Audit (3) findings per the review format defined above. Apply only approved (or user-updated) changes.
 
-Before declaring a batch complete, cross-check coverage against the original source list (e.g., the input change list or Gather-phase item list). Do not rely on sequential item-by-item narration alone, since an item can be silently skipped mid-sequence without the omission being obvious from the running commentary.
+Before declaring the review of the Audit (3) findings complete, cross-check coverage against the original source list (e.g., the input change list or Gather-phase item list). Do not rely on sequential item-by-item narration alone, since an item can be silently skipped mid-sequence without the omission being obvious from the running commentary.
 
 1. List every item identifier from the source list.
-2. Record each item's outcome: Approved, Rejected, Updated, or Backlog.
+2. Record each item's outcome: Approved, Rejected, Updated, or Backlog. For an item with options, include the chosen option letter (e.g. Approved B).
 3. Confirm the count of outcomes equals the count of source items, and name any item with no outcome.
 
 Items closed via Backlog count as accounted-for in this cross-check, not as omissions.
 
-Cannot advance to Critical Check (5) while backlog items from this stage remain open — see Backlog.
+Before advancing, re-run the Audit (3) checks on content added or changed in this stage, and add each finding to the backlog, regardless of severity.
+
+Cannot advance to Critical Check (5) while backlog items from this stage remain open.
 
 
 CRITICAL CHECK (5)
@@ -113,13 +121,16 @@ For an update to an existing file, also apply all approved changes to a working 
 - a BEFORE text not found exactly once
 - a diff against the original showing anything other than the approved changes
 - a change in encoding or line endings
+- a stale copy or reference in the updated document: any match, found by searching it for every BEFORE text (including an old heading name), that is a copy of, or reference to, the changed content
+
+Also search each file listed under Cross-file duplication for every BEFORE text. A match there that is a copy of, or reference to, the changed content is not a critical issue, since that file is not edited in this session; list it for follow-up in Write (6).
 
 If any critical issues are found, go to Resolve (4). If none, confirm with the user before moving to Write (6).
 
 
 WRITE (6)
 
-Show a summary diff of what will change in the file (or the full draft, for a new document). This requires its own confirmation, separate from the stage-transition confirmation already given to enter this stage — only after the user confirms the write itself, write the file to the document type's defined output location and present it.
+Show a summary diff of what will change in the file (or the full draft, for a new document), plus any follow-up matches listed by Critical Check (5). This requires its own confirmation, separate from the stage-transition confirmation already given to enter this stage — only after the user confirms the write itself, write the file to the document type's defined output location and present it.
 
 
 PROCESS IMPROVEMENT (7)
