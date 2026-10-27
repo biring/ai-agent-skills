@@ -20,7 +20,7 @@ The user can move back to any earlier stage at any time to do more work (e.g., r
 
 Review format: when presenting multiple items for review (the section/content list in Iterate (2), or Audit (3) findings in Resolve (4)):
 
-1. Order the list so that any item another item depends on comes first, then number the items sequentially in that order. If two or more items depend on each other, merge them into one item.
+1. Order the list so that any item another item depends on comes first, then number the items sequentially in that order. If two or more items depend on each other, merge them into one item. When one change affects more than one location, present all affected locations under one item.
 2. Give a summary first, tagging each item New, Update, or Remove.
 3. Review items one at a time, strictly in numbered order — never in bulk, and never out of the numbered sequence.
 4. Present each item with the following fields, each label on its own line, in all caps, with no colon after the label: CONTEXT, PROBLEM, BEFORE, AFTER, REASON, SIDE-EFFECT, ACTION.
@@ -28,33 +28,38 @@ Review format: when presenting multiple items for review (the section/content li
 
 Each field follows these rules:
 
+- CONTEXT names the part of the output the item changes and, if that part already exists, what it currently does.
+- When an item changes more than one location, CONTEXT lists each with a label (L1, L2, and so on), and BEFORE and AFTER use the same labels.
 - If BEFORE or AFTER quotes exact document text, show it in a code block.
 - Copy BEFORE text directly from the raw file content and confirm it matches exactly before presenting it; never reconstruct it from memory or a rendered view, since an inaccurate BEFORE can set a wrong premise for the change.
 - If the text was changed by an earlier approved item not yet written, copy BEFORE from the current draft instead, state "Approved draft (not yet written)" on the line above its code block, and confirm it matches exactly.
 - REASON should include enough context (what prompted the change and why it matters) to stand on its own, not just a one-line justification.
-- SIDE-EFFECT notes any other part of the document this change affects; if present, it is automatically added to the backlog (see Backlog below) rather than requiring separate approval here.
+- SIDE-EFFECT notes any other part of the document this change affects; if present, it is added to the backlog per Backlog below rather than requiring separate approval here.
 - ACTION is one of: Approve, Reject, Update, or Backlog.
 - When an item offers more than one option, label them Option A, Option B, and so on. Option A is always the recommended option, labelled "Option A (Recommended)". Show an AFTER for each option. Approve selects Option A. To choose any other option, the ACTION must name it (e.g. "Approve B").
 - For an item tagged New, state PROBLEM as N/A (this is new content) and leave BEFORE empty.
 
 Backlog: a running list kept during Iterate (2) and Resolve (4).
 
-- Items marked Backlog, SIDE-EFFECT entries recorded on items reviewed during that stage, and findings from the Resolve (4) re-check are added to the list.
+- Items marked Backlog and SIDE-EFFECT entries recorded on items reviewed during that stage are added to the list.
+- A SIDE-EFFECT entry is added only if it meets the minimum bar for a finding (see Audit (3)).
 - Backlog items are re-presented per Review format and closed via Approve, Reject, or Update.
+
+Report only open issues: never list a check that passed, an item already fixed or closed, or a recap of earlier steps. When a stage finds nothing, say only that no issues were found. Exceptions: the Resolve (4) coverage cross-check, which records an outcome for every item, and the Write (6) summary diff.
 
 
 GATHER (1)
 
 Establish what needs to be created or changed — ask if not already stated.
 
-- For a new document: fill in sections one at a time, against the document type's defined section list as-is. Don't pause to evaluate whether that section list itself needs changing.
-- For an update to an existing document: gather the specific list of changes or feedback to address, and ask which other files, if any, share content with it (used by Cross-file duplication).
+- For a new document: fill in sections one at a time, against the document type's defined section list as-is. Don't pause to evaluate whether that section list itself needs changing. If the document type defines no section list, agree one with the user first and use it as the defined section list.
+- For an update to an existing document: gather the specific list of changes or feedback to address, and ask which other files, if any, hold a copy or a reworded version of its content (used by Cross-file duplication).
 
 Don't fabricate specific values (numbers, thresholds, names, dates) the user hasn't given you — flag them as placeholders (e.g. [TBD — confirm X]) rather than inventing them.
 
 Whenever it's unclear which section content belongs in, ask rather than deciding unilaterally.
 
-Output of this step: a short numbered summary list (1–2 sentences per item) of the sections/content items to work through in Iterate (2), ordered and numbered per Review format. Show the list and confirm with the user before moving to Iterate (2).
+Output of this step: a short numbered summary list (1–2 sentences per item) of the sections/content items to work through in Iterate (2), ordered and numbered per Review format. Each item names the part of the output it defines or changes (e.g. a section, table, field, or file). Show the list and confirm with the user before moving to Iterate (2).
 
 
 ITERATE (2)
@@ -68,19 +73,23 @@ Cannot advance to Audit (3) while backlog items from this stage remain open.
 
 AUDIT (3)
 
+Minimum bar for a finding: raise a finding only when, if left unfixed, it would make the document wrong, contradictory, ambiguous or misleading, or when it breaks a rule the document type defines. Never raise wording, punctuation or style preferences.
+
 Run a full check against the draft. Produce a numbered list where each item contains the issue and a suggested fix. Check against the criteria the document type defines (e.g. a quality checklist, a words-to-avoid list, structural rules) plus these process-level checks that apply regardless of document type:
 
 - Ambiguity: any instruction that could be interpreted more than one way
-- Duplication: the same content appearing in more than one place; identify which location should be the single source of truth, and suggest replacing each other copy with a reference to it
-- Cross-file duplication: content in this document that is also written in another file (its bundled files, its template, the project's instructions, or any other file named in Gather (1)); apply the same fix as Duplication. If a copy must stay (e.g. the document must remain self-contained), keep it and say so in the finding.
+- Duplication: the same content appearing in more than one place; identify which location should be the single source of truth, and suggest replacing each other copy with a reference to it. Exception: a copy kept on purpose, because the document must be self-contained or the step is high-consequence, is not a finding if it names its source; if it does not, suggest naming it.
+- Cross-file duplication: content in this document that is also written in another file (its bundled files, its template, the project's instructions, or any other file named in Gather (1)); apply the same fix and exception as Duplication.
 - Coupling: content in this document whose correctness depends on the details of another file's content (its rules, values, wording, or structure, such as its section names or numbers) without restating it word for word. Examples include a paraphrase, a summary, or an assumption about what that file says. Suggest referring to that file by name for the detail instead, so a change there cannot silently make this document wrong.
 - Hidden dependency: content that works only if another specific file is also loaded or present, without stating that as a requirement; suggest stating the requirement or removing the dependency.
-- Cohesion: content placed in a section whose purpose it does not serve, a section doing more than one job, or content that belongs to another document's role; suggest moving it to the section or document whose purpose it serves.
-- Necessity: a rule, case, or step with no current need, or a procedure more complex than its purpose requires; suggest removing or simplifying it.
+- Cohesion: content placed in a section whose purpose it does not serve, a section or rule doing more than one job, a section or rule that mixes cases a reader handles separately (e.g. new and updated documents), or content that belongs to another document's role; suggest moving or splitting it so each part serves one purpose.
+- Necessity: any content (such as a rule, case, step, section, example, or note) with no current need, or any content more complex than its purpose requires; suggest removing or simplifying it.
+- Open lists: a list, or a count of its items, that must be edited every time a new case is added; suggest a rule covering the whole category, or dropping the count. A list meant to be complete (e.g. the allowed ACTION values) is not a finding.
+- Substitution: a rule written for a whole category (e.g. "any document") that cannot be followed for one member of it; suggest narrowing the rule or saying how that member is handled.
 - Terminology: one concept called by different names, or one name used for different concepts; suggest one term per concept, used everywhere.
 - Errors: inconsistent, contradicts other content, or missing something the document type requires
 - References: every pointer from one part of the document (or its bundled files) to another resolves to something that actually exists
-- Readability: any single sentence that joins more than one rule or condition and should be split into short clauses or numbered sub-parts
+- Readability: any single sentence that joins more than one rule or condition so that one of them could be missed or misread; suggest splitting it into short clauses or numbered sub-parts
 - Tracking fields: any tracking field (e.g. Version, Last updated, Revision History) in the document, or in the template used to create, update, or maintain it, that the planned changes don't update
 
 For a document that instructs an agent or defines a process, also check:
@@ -92,7 +101,7 @@ For an update to an already-written document, scope the audit to the changed con
 
 Present the complete list before making any changes.
 
-If no issues are found, say so and ask to move to Critical Check (5).
+If no issues are found, ask to move to Critical Check (5).
 
 
 RESOLVE (4)
@@ -107,9 +116,9 @@ Before declaring the review of the Audit (3) findings complete, cross-check cove
 
 Items closed via Backlog count as accounted-for in this cross-check, not as omissions.
 
-Before advancing, re-run the Audit (3) checks on content added or changed in this stage, and add each finding to the backlog, regardless of severity.
+After every Audit (3) finding and every backlog item from this stage is closed, re-run the Audit (3) checks once per visit to this stage on all content added or changed in that visit. Present each finding that meets the minimum bar for a finding (see Audit (3)) as a new list, numbered on from the last Audit (3) finding, and review it per Review format. Run the coverage cross-check above on this list before closing it. Do not re-run the check after this list is closed.
 
-Cannot advance to Critical Check (5) while backlog items from this stage remain open.
+Cannot advance to Critical Check (5) while backlog items or re-check findings from this stage remain open.
 
 
 CRITICAL CHECK (5)
@@ -121,9 +130,9 @@ For an update to an existing file, also apply all approved changes to a working 
 - a BEFORE text not found exactly once
 - a diff against the original showing anything other than the approved changes
 - a change in encoding or line endings
-- a stale copy or reference in the updated document: any match, found by searching it for every BEFORE text (including an old heading name), that is a copy of, or reference to, the changed content
+- a stale copy or reference in the updated document: any match, found by searching it for every BEFORE text and every name the changes rename or remove (such as a heading, term, or field name), that is a copy of, or reference to, the changed content; ignore matches inside the approved new text itself
 
-Also search each file listed under Cross-file duplication for every BEFORE text. A match there that is a copy of, or reference to, the changed content is not a critical issue, since that file is not edited in this session; list it for follow-up in Write (6).
+Also run the same search on each file listed under Cross-file duplication, and read the parts of that file that cover the same topic as each change for a reworded version of the changed content. A match there is not a critical issue, since that file is not edited in this session; list it for follow-up in Write (6).
 
 If any critical issues are found, go to Resolve (4). If none, confirm with the user before moving to Write (6).
 
